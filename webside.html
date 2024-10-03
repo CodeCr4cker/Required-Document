@@ -3,79 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home Page</title>
+    <title>Simple Chatbot</title>
     <style>
-        body{
-            background-image: url("https://wallpapercave.com/wp/wp9127446.jpg");
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
         }
-        .navbar{
-            justify-content: end;
-            position: sticky;
-            top: 0;
-            display: flex;
-            column-gap: 25px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255);
-            width: 100%;
-            height: 2.5rem;
-            font-size: 1.5rem;
-            border-color: gray;
-            border-top-left-radius: 3rem;
-            border-top-right-radius: 3rem;
-            border-bottom-left-radius: 3rem;
-            border-bottom-right-radius: 3rem;
+
+        .chat-container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
-        .text{
-            text-decoration: none;
-            color: white;
-            margin-right: 2rem;                        
+
+        .chatbox {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
         }
-        img{
-            border-radius: 20rem;
-            height: 15rem;
-            width: 15rem;
-            position: absolute;
-            top: 15%;
-            left: 40%;
-            
+
+        .message {
+            margin: 10px 0;
         }
-        
-         .info{
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255);
-            height: 15rem;
-            width: 30rem;
-            color: white;
-            font-size: 1.3rem;
-            text-align: center;
-            border-top-left-radius: 3rem;
-            border-top-right-radius: 3rem;
-            border-bottom-left-radius: 3rem;
-            border-bottom-right-radius: 3rem;
-            position: absolute;
-            top: 50%;
-            left: 30rem;
-         }
-         /* p{
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255);
-         } */
+
+        .user-message {
+            text-align: right;
+            color: blue;
+        }
+
+        .bot-message {
+            text-align: left;
+            color: green;
+        }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <!-- <p>Divyanshu Pandey</p> -->
-        <a class="text" href="#home">Home</a>
-        <a class="text" href="#profile">Profile</a>
-        <a class="text" href="#sign in">Sign In</a>
-        <a class="text" href="#about us">About Us</a>
-        <a class="text" href="#contect us">Contect us</a>
+    <div class="chat-container">
+        <div class="chatbox" id="chatbox"></div>
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
     </div>
-    <div class="pic"><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png"></div>
-    <div class="info">
-        <p></p><b>Name:- </b>Divyanshu pandey <br></p>
-        <p></p><b>Standard:- </b>11 <sup>th</sup> <br></p>
-        <p></p><b>Passion:- </b>Programming</p>
-    </div>
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("userInput");
+            const userMessage = userInput.value;
+
+            if (userMessage.trim() === "") return; // Prevent empty messages
+
+            displayMessage(userMessage, "user-message");
+            userInput.value = ""; // Clear input field
+
+            // Simple bot response logic
+            const botResponse = getBotResponse(userMessage);
+            displayMessage(botResponse, "bot-message");
+        }
+
+        function displayMessage(message, className) {
+            const chatbox = document.getElementById("chatbox");
+            const messageDiv = document.createElement("div");
+            messageDiv.className = `message ${className}`;
+            messageDiv.textContent = message;
+            chatbox.appendChild(messageDiv);
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
+        }
+
+        function getBotResponse(input) {
+            // Basic bot responses
+            const responses = {
+                "hello": "Hi there! How can I help you?",
+                "how are you?": "I'm just a bunch of code, but thanks for asking!",
+                "bye": "Goodbye! Have a great day!",
+            };
+
+            return responses[input.toLowerCase()] || "I'm sorry, I didn't understand that.";
+        }
+    </script>
 </body>
 </html>
