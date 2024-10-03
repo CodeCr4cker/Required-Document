@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            background-image: url("https://wallpapercave.com/wp/wp9127446.jpg");
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .navbar {
+            justify-content: end;
+            position: sticky;
+            top: 0;
+            display: flex;
+            column-gap: 25px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            width: 100%;
+            height: 2.7rem;
+            font-size: 1.5rem;
+            border-radius: 3rem;
+            background-color: rgba(0, 0, 0, 0.5); 
+        }
+        .foot{
+            justify-content: end;
+            position: sticky;
+            top: 0;
+            display: flex;
+            column-gap: 25px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            width: 100%;
+            height: 2.7rem;
+            margin-top: 3rem;
+            font-size: 1.5rem;
+            border-radius: 3rem;
+            background-color: rgba(0, 0, 0, 0.5); 
+        }
+        .text {
+            text-decoration: none;
+            color: white;
+            margin-right: 2rem;
+           
+        }
+        .circle {
+            margin-top: 50px; /* Moves the div down by 100px */
+            /* margin-top: 3rem;
+            padding-top: 3rem; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 5px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            padding: 1rem;
+            height: 18rem;
+            position: relative; /* For movement animation */
+            animation: moveCircle 4s infinite ease-in-out; /* Apply animation */
+            width: 18rem;
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+        }
+        img {
+            /* margin-top: 3rem;
+            padding-top: 3rem; */
+            border-radius: 50%;
+            height: 15rem;
+            width: 15rem;
+        }
+        .info {
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            height: 15rem;
+            width: 30rem;
+            color: white;
+            font-size: 1.3rem;
+            text-align: center;
+            border-radius: 3rem;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+        .skill{
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            height: 19rem;
+            width: 30rem;
+            color: white;
+            font-size: 1.3rem;
+            text-align: center;
+            border-radius: 3rem;
+            padding: 1rem;
+            margin-top: 2rem;
+            
+        }
+        #pro{
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            height: 2rem;
+            width: 22rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            }
+            /* Define keyframes for moving the circle */
+        @keyframes moveCircle {
+            0% {
+                transform: scale(1);
+                }
+            25% {
+                transform: scale(1.1);
+            
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            75% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .html{
+            /* color: white; */
+            position: relative; /* For movement animation */
+            animation: moveCircle1 4s infinite ease-in-out; /* Apply animation */
+        }
+        .css{
+            /* color: white; */
+            position: relative; /* For movement animation */
+            animation: moveCircle2 4s infinite ease-in-out; /* Apply animation */
+
+        }
+        .js{
+            /* color: white; */
+            position: relative; /* For movement animation */
+            animation: moveCircle3 4s infinite ease-in-out; /* Apply animation */
+
+        }
+        .python{
+            /* color: white; */
+            position: relative; /* For movement animation */
+            animation: moveCircle4 4s infinite ease-in-out; /* Apply animation */
+
+        }
+        @keyframes moveCircle1 {
+            0% {
+                background-color: teal;
+                width: 10px;
+                }
+            /* 25% {
+                background-color: teal;
+                width: 30px;          
+            } */
+            50% {
+                background-color: teal;
+                width: 60px;           
+            }
+            75% {
+                background-color: teal;
+                width: 90px;
+            }
+            100% {
+                background-color: teal;
+                /* width: 200px;  */
+            }
+        }
+
+        @keyframes moveCircle2 {
+            0% {
+                background-color: teal;
+                width: 10px;
+                }
+            25% {
+                background-color: teal;
+                width: 30px;          
+            }
+            50% {
+                background-color: teal;
+                width: 60px;           
+            }
+            75% {
+                background-color: teal;
+                width: 90px;
+            }
+            /* 100% {
+                background-color: teal;
+                width: 200px; 
+            } */
+        }
+
+        @keyframes moveCircle3 {
+            0% {
+                background-color: teal;
+                width: 10px;
+                }
+            20% {
+                background-color: teal;
+                width: 30px;          
+             }
+           /* 50% {
+                background-color: teal;
+                width: 60px;           
+            }
+            75% {
+                background-color: teal;
+                width: 90px;
+            }
+            100% {
+                background-color: teal;
+                width: 200px; 
+            } */
+        }
+
+        @keyframes moveCircle4 {
+            0% {
+                background-color: teal;
+                width: 10px;
+                }
+            25% {
+                background-color: teal;
+                width: 30px;          
+            }
+            /* 50% {
+                background-color: teal;
+                width: 60px;           
+            }
+            75% {
+                background-color: teal;
+                width: 90px;
+            }
+            100% {
+                background-color: teal;
+                width: 200px; 
+            } */
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Media Queries for devices with a width of 767px or smaller */
+        @media (min-width: 200px) and (max-width: 800px) {
+            body {
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+            .navbar{
+                font-size: 11px;
+                height: 2rem;
+                column-gap: 15px;
+                justify-content: center;
+                padding: 0.3rem;
+            }
+            .foot{
+                font-size: 11px;
+                height: 2rem;
+                column-gap: 15px;
+                justify-content: center;
+                padding: 0.3rem;
+            }
+            .circle {
+                height: 12rem;
+                width: 12rem;
+                position: relative; /* For movement animation */
+                animation: moveCircle 4s infinite ease-in-out; /* Apply animation */
+            }
+            @keyframes moveCircle {
+            0% {
+                transform: scale(0);
+                }
+            25% {
+                transform: scale(1);
+            
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            75% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+            img {
+                height: 10rem;
+                width: 10rem;
+            }
+            .info {
+                width: 80%;
+                height: auto;
+                margin: 2rem auto;
+                font-size: 1rem;
+                padding: 1rem;
+            }
+            .text {
+                margin-right: 1rem;
+            }
+            .skill {
+                width: 80%;
+                height: auto;
+                margin: 2rem auto;
+                font-size: 1rem;
+                padding: 1rem;
+            }
+            #pro{
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            height: 1rem;
+            width: 11rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a class="text" href="#home">Home</a>
+        <a class="text" href="#profile">Profile</a>
+        <a class="text" href="#sign-in">Sign In</a>
+        <a class="text" href="#about-us">About Us</a>
+        <a class="text" href="#contact-us">Contact Us</a>
+    </div>
+    <div class="circle">
+        <img src="https://github.com/Divyanshu-85/project/blob/main/me.jpg?raw=true" alt="Profile Picture of Divyanshu Pandey">
+    </div>
+    <div class="info">
+        <p><b>Name:</b> Divyanshu Pandey</p>
+        <p><b>Standard:</b> 11<sup>th</sup></p>
+        <p><b>Passion:</b> Programming</p>
+    </div>
+
+
+
+
+    <div class="skill"><h2>My Skills</h2>
+        <div class="html" id="pro">HTML:-</div>
+        <div class="css" id="pro">CSS:-</div>
+        <div class="js" id="pro">JS:-</div>
+        <div class="python" id="pro">Python:-</div>
+        <!-- <div class="C" id="pro">C</div>
+        <div class="java" id="pro">Java</div> -->
+    </div>
+
+
+
+
+<div class="foot"></div>
+</body>
+</html>
+
