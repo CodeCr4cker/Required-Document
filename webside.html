@@ -89,7 +89,12 @@
                 return "Sure! What do you need help with?";
             } else if (lowerInput.includes("weather")) {
                 return "I can't check the weather, but you can look it up online!";
-            } else {
+            } else if (lowerInput.includes("Who is your Developer")) {
+                return "Mr Divyanshu Pandey";
+            } else if (lowerInput.includes("Thank you")) {
+                return "Your Welcome";
+            }
+            else {
                 return "I'm sorry, I didn't understand that. Can you ask something else?";
             }
         }
