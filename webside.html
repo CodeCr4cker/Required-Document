@@ -61,7 +61,6 @@
             displayMessage(userMessage, "user-message");
             userInput.value = ""; // Clear input field
 
-            // Simple bot response logic
             const botResponse = getBotResponse(userMessage);
             displayMessage(botResponse, "bot-message");
         }
@@ -76,14 +75,23 @@
         }
 
         function getBotResponse(input) {
-            // Basic bot responses
-            const responses = {
-                "hello": "Hi there! How can I help you?",
-                "how are you?": "I'm just a bunch of code, but thanks for asking!",
-                "bye": "Goodbye! Have a great day!",
-            };
-
-            return responses[input.toLowerCase()] || "I'm sorry, I didn't understand that.";
+            const lowerInput = input.toLowerCase();
+            
+            if (lowerInput.includes("hello") || lowerInput.includes("hi")) {
+                return "Hi there! How can I assist you?";
+            } else if (lowerInput.includes("how are you")) {
+                return "I'm just a bunch of code, but thanks for asking!";
+            } else if (lowerInput.includes("bye")) {
+                return "Goodbye! Have a great day!";
+            } else if (lowerInput.includes("what is your name")) {
+                return "I am a simple chatbot created to assist you.";
+            } else if (lowerInput.includes("help")) {
+                return "Sure! What do you need help with?";
+            } else if (lowerInput.includes("weather")) {
+                return "I can't check the weather, but you can look it up online!";
+            } else {
+                return "I'm sorry, I didn't understand that. Can you ask something else?";
+            }
         }
     </script>
 </body>
