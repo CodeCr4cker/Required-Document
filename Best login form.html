@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign in & Sign up Form</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
-
-* {
+    * {
+      
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -17,11 +16,16 @@ body,
 input {
   font-family: "Poppins", sans-serif;
 }
+body{
+  background-image: linear-gradient(45deg, white, gray, black);
+}
 
 .container {
   position: relative;
   width: 100%;
-  background-color: #fff;
+  /* background-color: #fff; */
+  backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 30px rgba(255, 255, 255);
   min-height: 100vh;
   overflow: hidden;
 }
@@ -69,14 +73,16 @@ form.sign-in-form {
 
 .title {
   font-size: 2.2rem;
-  color: #444;
+  color: #000000;
   margin-bottom: 10px;
 }
 
 .input-field {
   max-width: 380px;
   width: 100%;
-  background-color: #f0f0f0;
+  backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 30px rgba(255, 255, 255);
+  /* background-color: #f0f0f0; */
   margin: 10px 0;
   height: 55px;
   border-radius: 55px;
@@ -141,7 +147,9 @@ form.sign-in-form {
 
 .btn {
   width: 150px;
-  background-color: #5995fd;
+  /* backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 30px #5995fd; */
+  background-image: linear-gradient(45deg, white, gray, black);
   border: none;
   outline: none;
   height: 49px;
@@ -155,7 +163,10 @@ form.sign-in-form {
 }
 
 .btn:hover {
-  background-color: #4d84e2;
+  /* backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 30px #4d84e2; */
+  background-image: linear-gradient(45deg, white, gray, black);
+  /* color: #00ff88; */
 }
 .panels-container {
   position: absolute;
@@ -175,7 +186,10 @@ form.sign-in-form {
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
-  background-image: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
+  background-image: url("https://wallpapercave.com/wp/wp9127446.jpg");
+  /* backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 30px rgba(255, 255, 255); */
+  /* background-image: linear-gradient(-45deg, #00eeff 0%, #04fedd 100%); */
   transition: 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;
