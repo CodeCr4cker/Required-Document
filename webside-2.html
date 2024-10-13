@@ -3,515 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Ancient Flipbook</title>
     <style>
         body {
-            background-image: url("https://wallpapercave.com/wp/wp9127446.jpg");
-            background-size: cover;
-            background-position: center;
-            margin: 0;
+            background-color: #222;
+            color: #fff;
+            font-family: 'Georgia', serif;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .flipbook {
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+            position: relative;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: #4b3d2b;
+            border: 1px solid #8a7b5b;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            transition: transform 0.6s;
+            backface-visibility: hidden;
+        }
+
+        .cover {
+            background: #3b2d1f;
+            color: #ffcc00;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
-        .navbar {
-            justify-content: end;
-            position: sticky;
-            top: 0;
-            display: flex;
-            column-gap: 25px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-            width: 100%;
-            height: 2.7rem;
-            font-size: 1.5rem;
-            border-radius: 3rem;
-            background-color: rgba(0, 0, 0, 0.5); 
-        }
-        .foot {
-            justify-content: end;
-            position: sticky;
-            top: 0;
-            display: flex;
-            column-gap: 25px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-            width: 100%;
-            height: 2.7rem;
-            margin-top: 3rem;
-            font-size: 1.5rem;
-            border-radius: 3rem;
-            background-color: rgba(0, 0, 0, 0.5); 
-        }
-        .text {
-            text-decoration: none;
-            color: white;
-            margin-right: 2rem;   
-        }
-        .circle {
-            margin-top: 50px; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 5px solid rgba(255, 255, 255, 0.5);
+
+        .symbol {
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ffcc00, transparent);
             border-radius: 50%;
-            padding: 1rem;
-            height: 18rem;
-            width: 18rem;
-            position: relative; /* For movement animation */
-            animation: moveCircle 4s infinite ease-in-out; /* Apply animation */
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-        }
-        .pic {
-            border-radius: 50%;
-            height: 15rem;
-            width: 15rem;
-        }
-        .info {
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-            height: 15rem;
-            width: 30rem;
-            color: white;
-            font-size: 1.3rem;
-            text-align: center;
-            border-radius: 3rem;
-            padding: 1rem;
-            margin-top: 2rem;
-            z-index: -1;
-        }
-        .skill {
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-            height: 19rem;
-            width: 30rem;
-            color: white;
-            font-size: 1.3rem;
-            text-align: center;
-            border-radius: 3rem;
-            padding: 1rem;
-            margin-top: 2rem;  
-            z-index: -1;
-        }
-        #pro {
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-            height: 2rem;
-            width: 22rem;
-            color: white;
-            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.8);
             margin-bottom: 20px;
+            animation: glow 1.5s infinite alternate;
         }
-        @keyframes moveCircle {
+
+        @keyframes glow {
             0% {
-                transform: scale(1);
-                }
-            25% {
-                transform: scale(1.1);
-            
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            75% {
-                transform: scale(1.1);
+                box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
             }
             100% {
-                transform: scale(1);
-            }
-        }
-        .html{
-            /* color: white; */
-            position: relative; /* For movement animation */
-            animation: moveCircle1 4s infinite ease-in-out; /* Apply animation */
-        }
-        .css{
-            /* color: white; */
-            position: relative; /* For movement animation */
-            animation: moveCircle2 4s infinite ease-in-out; /* Apply animation */
-
-        }
-        .js{
-            /* color: white; */
-            position: relative; /* For movement animation */
-            animation: moveCircle3 4s infinite ease-in-out; /* Apply animation */
-
-        }
-        .python{
-            /* color: white; */
-            position: relative; /* For movement animation */
-            animation: moveCircle4 4s infinite ease-in-out; /* Apply animation */
-
-        }
-        @keyframes moveCircle1 {
-            0% {
-                background-color: teal;
-                width: 10px;
-                }
-            /* 25% {
-                background-color: teal;
-                width: 30px;          
-            } */
-            50% {
-                background-color: teal;
-                width: 60px;           
-            }
-            75% {
-                background-color: teal;
-                width: 90px;
-            }
-            100% {
-                background-color: teal;
-                /* width: 200px;  */
+                box-shadow: 0 0 25px rgba(255, 204, 0, 1);
             }
         }
 
-        @keyframes moveCircle2 {
-            0% {
-                background-color: teal;
-                width: 10px;
-                }
-            25% {
-                background-color: teal;
-                width: 30px;          
-            }
-            50% {
-                background-color: teal;
-                width: 60px;           
-            }
-            75% {
-                background-color: teal;
-                width: 90px;
-            }
-            /* 100% {
-                background-color: teal;
-                width: 200px; 
-            } */
-        }
-
-        @keyframes moveCircle3 {
-            0% {
-                background-color: teal;
-                width: 10px;
-                }
-            20% {
-                background-color: teal;
-                width: 30px;          
-             }
-           /* 50% {
-                background-color: teal;
-                width: 60px;           
-            }
-            75% {
-                background-color: teal;
-                width: 90px;
-            }
-            100% {
-                background-color: teal;
-                width: 200px; 
-            } */
-        }
-
-        @keyframes moveCircle4 {
-            0% {
-                background-color: teal;
-                width: 10px;
-                }
-            25% {
-                background-color: teal;
-                width: 30px;          
-            }
-            /* 50% {
-                background-color: teal;
-                width: 60px;           
-            }
-            75% {
-                background-color: teal;
-                width: 90px;
-            }
-            100% {
-                background-color: teal;
-                width: 200px; 
-            } */
-        }
-        .chat-container {
-            position: absolute; 
-            top: 200px; 
-            right: 50px; 
-            max-width: 25rem;
-            z-index: 10; /* Ensure chat container is above other elements */
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-            color: white;
-            font-size: 1.3rem;
-            text-align: center;
-            border-radius: 3rem;
-            padding: 1rem;
-            z-index: -2;
-            display: none; /* Initially hidden */
-        }
-        .chatbox {
-            height: 10rem;
-            overflow-y: auto;
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 3rem;
-        }
-        ::-webkit-scrollbar {
-            display: none;
-        }
-        .message {
-            margin: 10px 0;
-        }
-        .user-message {
-            text-align: right;
-            color: blue;
-        }
-        .bot-message {
-            text-align: left;
-            color: green;
-        }
         button {
-            height: 2rem;
-            width: 5rem;
-        }
-        #userInput {
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-            height: 2rem;
-            width: 14rem;
-        }
-        .chat-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: white;
-            border-radius: 50%;
-            padding: 10px;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
-            margin-bottom: 10rem;
-            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
         }
-        .pic1 {
-            width: 50px;
-            height: 50px;
-        }
-
-
-
-
-
-
-
-
-        /* Media Queries for devices with a width of 767px or smaller */
-        @media (min-width: 200px) and (max-width: 800px) {
-            body {
-                flex-direction: column;
-                justify-content: flex-start;
-            }
-            .navbar{
-                font-size: 11px;
-                height: 2rem;
-                column-gap: 15px;
-                justify-content: center;
-                padding: 0.3rem;
-            }
-            .foot{
-                font-size: 11px;
-                height: 2rem;
-                column-gap: 15px;
-                justify-content: center;
-                padding: 0.3rem;
-            }
-            .circle {
-                height: 12rem;
-                width: 12rem;
-                position: relative; /* For movement animation */
-                animation: moveCircle 4s infinite ease-in-out; /* Apply animation */
-            }
-            @keyframes moveCircle {
-            0% {
-                transform: scale(0);
-                }
-            25% {
-                transform: scale(1);
-            
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            75% {
-                transform: scale(1);
-            }
-            100% {
-                transform: scale(0);
-            }
-            }
-           .pic1 {
-            width: 50px;
-            height: 50px;
-            }
-            .pic {
-                height: 10rem;
-                width: 10rem;
-            }
-            .info {
-                width: 80%;
-                height: auto;
-                margin: 2rem auto;
-                font-size: 1rem;
-                padding: 1rem;
-            }
-            .text {
-                margin-right: 1rem;
-            }
-            .skill {
-                width: 80%;
-                height: auto;
-                margin: 2rem auto;
-                font-size: 1rem;
-                padding: 1rem;
-            }
-            #pro{
-            backdrop-filter: blur(20px);
-            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
-            height: 1rem;
-            width: 11rem;
-            color: white;
-            text-align: center;
-            margin-bottom: 20px;
-            }
-            .chat-container {
-                position: static; 
-                margin: 2rem auto; 
-                max-width: 15rem; 
-                border-radius: 2rem;
-                padding: 1rem;
-                display: none; /* Hide chat container initially */
-            }
-            .chatbox {
-                height: 15rem;
-            }
-        }
-
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <a class="text" href="#home">Home</a>
-        <a class="text" href="#profile">Profile</a>
-        <a class="text" href="#sign-in">Sign In</a>
-        <a class="text" href="#about-us">About Us</a>
-        <a class="text" href="#contact-us">Contact Us</a>
+    <div class="flipbook" id="flipbook">
+        <div class="page cover">
+            <div class="symbol"></div>
+            <h1>Ancient Tome</h1>
+        </div>
+        <div class="page">Page 1: The beginning of time...</div>
+        <div class="page">Page 2: The secrets of the ancients...</div>
+        <div class="page">Page 3: Legends forgotten...</div>
+        <div class="page cover">The End</div>
     </div>
-    <div class="circle">
-        <img src="https://github.com/Divyanshu-85/project/blob/main/me.jpg?raw=true" class="pic" alt="Profile Picture of Divyanshu Pandey">
-    </div>
-    <div class="info">
-        <p><b>Name:</b> Divyanshu Pandey</p>
-        <p><b>Standard:</b> 11<sup>th</sup></p>
-        <p><b>Passion:</b> Programming</p>
-    </div>
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
 
-    <div class="skill">
-        <h2>My Skills</h2>
-        <div class="html" id="pro">HTML:-</div>
-        <div class="css" id="pro">CSS:-</div>
-        <div class="js" id="pro">JS:-</div>
-        <div class="python" id="pro">Python:-</div>
-    </div>
-    <div class="chat-icon" onclick="toggleChat()">
-        <img src="https://img.icons8.com/?size=100&id=nToPp1ZMxcSe&format=png&color=000000" class="pic1" alt="Chat Icon">
-    </div>
-
-    <div class="chat-container" id="chat-container">
-        <div class="chatbox" id="chatbox"></div>
-        <input type="text" id="userInput" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
-    </div>
-
-    <div class="foot"></div>
     <script>
-        // Function to toggle chatbot visibility
-        function toggleChat() {
-            const chatContainer = document.getElementById("chat-container");
-            chatContainer.style.display = (chatContainer.style.display === "none" || chatContainer.style.display === "") ? "block" : "none"; // Toggle display
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+
+        function showPage(index) {
+            pages.forEach((page, i) => {
+                page.style.transform = `rotateY(${(i - index) * 180}deg)`;
+            });
         }
 
-        // Send message on Enter key press
-        document.getElementById("userInput").addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            currentPage = (currentPage > 0) ? currentPage - 1 : 0;
+            showPage(currentPage);
         });
 
-        function sendMessage() {
-            const userInput = document.getElementById("userInput");
-            const userMessage = userInput.value.trim(); // Trim whitespace
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentPage = (currentPage < pages.length - 1) ? currentPage + 1 : pages.length - 1;
+            showPage(currentPage);
+        });
 
-            if (userMessage === "") return; // Prevent empty messages
-
-            displayMessage(userMessage, "user-message");
-            userInput.value = ""; // Clear input field
-
-            const botResponse = getBotResponse(userMessage);
-            displayAutoWritingMessage(botResponse, "bot-message");
-        }
-
-        function displayMessage(message, className) {
-            const chatbox = document.getElementById("chatbox");
-            const messageDiv = document.createElement("div");
-            messageDiv.className = `message ${className}`;
-            messageDiv.textContent = message;
-            chatbox.appendChild(messageDiv);
-            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
-        }
-
-        // Auto-writing effect for bot messages
-        function displayAutoWritingMessage(message, className) {
-            const chatbox = document.getElementById("chatbox");
-            const messageDiv = document.createElement("div");
-            messageDiv.className = `message ${className}`;
-            chatbox.appendChild(messageDiv);
-
-            let i = 0;
-            function typeWriter() {
-                if (i < message.length) {
-                    messageDiv.textContent += message.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 50); // Adjust the speed here (50ms per character)
-                }
-            }
-
-            typeWriter();
-            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
-        }
-
-        function getBotResponse(input) {
-            const lowerInput = input.toLowerCase();
-            
-            if (lowerInput.includes("hello") || lowerInput.includes("hi")) {
-                return "Hi there! How can I assist you?";
-            } else if (lowerInput.includes("how are you")) {
-                return "I'm just a bunch of code, but thanks for asking!";
-            } else if (lowerInput.includes("bye")) {
-                return "Goodbye! Have a great day!";
-            } else if (lowerInput.includes("what is your name")) {
-                return "I am a simple chatbot created to assist you.";
-            } else if (lowerInput.includes("help")) {
-                return "Sure! What do you need help with?";
-            } else if (lowerInput.includes("weather")) {
-                return "I can't check the weather, but you can look it up online!";
-            } else if (lowerInput.includes("who is your developer")) {
-                return "My developer is Mr. Divyanshu Pandey.";
-            } else {
-                return "I'm sorry, I didn't understand that. Can you ask something else?";
-            }
-        }
-    </script> 
+        // Initial display
+        showPage(currentPage);
+    </script>
 </body>
 </html>
