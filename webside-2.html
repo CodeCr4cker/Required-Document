@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ancient Flipbook</title>
+    <title>Mysterious Flipbook</title>
     <style>
         body {
             background-color: #222;
@@ -37,6 +37,8 @@
             font-size: 20px;
             transition: transform 0.6s;
             backface-visibility: hidden;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .cover {
@@ -44,6 +46,9 @@
             color: #ffcc00;
             flex-direction: column;
             align-items: center;
+            background-image: url('cover-image-url.jpg'); /* Replace with your cover image URL */
+            background-size: cover;
+            background-position: center;
         }
 
         .symbol {
@@ -70,6 +75,14 @@
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
+            background: #555;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        button:hover {
+            background: #777;
         }
     </style>
 </head>
@@ -82,6 +95,8 @@
         <div class="page">Page 1: The beginning of time...</div>
         <div class="page">Page 2: The secrets of the ancients...</div>
         <div class="page">Page 3: Legends forgotten...</div>
+        <div class="page">Page 4: Lost civilizations...</div>
+        <div class="page">Page 5: The mysteries of the universe...</div>
         <div class="page cover">The End</div>
     </div>
     <button id="prevBtn">Previous</button>
