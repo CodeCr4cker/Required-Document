@@ -30,10 +30,13 @@
             display: inline-block;
             margin-left: 40px; /* Adjust space for pen */
         }
-        .box{
+        .box {
             height: 7rem;
             width: 9rem;
             border-style: solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         @keyframes movePen {
@@ -50,7 +53,9 @@
 <body>
     <div class="container">
         <img src="https://github.com/Divyanshu-85/Required-Document/raw/main/PEN.png" alt="Pen" class="pen" id="pen">
-        <div class="box"> <div id="text" class="text"></div></div>
+        <div class="box">
+            <div id="text" class="text">Hello, this is an auto-typing text effect!</div>
+        </div>
     </div>
     <script>
         const textElement = document.getElementById('text');
@@ -59,14 +64,18 @@
         let index = 0;
 
         function typeText() {
-            if (index < message.length) {
-                textElement.textContent += message.charAt(index);
-                index++;
-                penElement.style.left = `${textElement.offsetWidth}px`; // Move pen with text
-                setTimeout(typeText, 100); // Adjust typing speed
-            } else {
-                penElement.style.display = 'none'; // Hide pen after typing
+            textElement.textContent = ""; // Clear the text for typing effect
+            function typeNext() {
+                if (index < message.length) {
+                    textElement.textContent += message.charAt(index);
+                    index++;
+                    penElement.style.left = `${textElement.offsetWidth}px`; // Move pen with text
+                    setTimeout(typeNext, 100); // Adjust typing speed
+                } else {
+                    penElement.style.display = 'none'; // Hide pen after typing
+                }
             }
+            typeNext();
         }
 
         window.onload = typeText;
