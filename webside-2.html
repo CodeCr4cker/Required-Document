@@ -20,7 +20,7 @@
 
         .pen {
             position: absolute;
-            width: 30px; /* Adjust size as needed */
+            width: 50px; /* Adjust size as needed */
             animation: movePen 0.5s forwards;
         }
 
@@ -29,6 +29,11 @@
             white-space: pre; /* Preserve whitespace */
             display: inline-block;
             margin-left: 40px; /* Adjust space for pen */
+        }
+        .box{
+            height: 7rem;
+            width: 9rem;
+            border-style: solid;
         }
 
         @keyframes movePen {
@@ -45,7 +50,7 @@
 <body>
     <div class="container">
         <img src="https://github.com/Divyanshu-85/Required-Document/raw/main/PEN.png" alt="Pen" class="pen" id="pen">
-        <div id="text" class="text"></div>
+        <div class="box"> <div id="text" class="text"></div></div>
     </div>
     <script>
         const textElement = document.getElementById('text');
