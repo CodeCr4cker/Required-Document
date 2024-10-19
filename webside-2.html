@@ -20,23 +20,28 @@
 
         .pen {
             position: absolute;
-            width: 50px; /* Adjust size as needed */
+            width: 50px;
             animation: movePen 0.5s forwards;
         }
 
         .text {
             font-size: 24px;
-            white-space: pre; /* Preserve whitespace */
+            white-space: pre;
             display: inline-block;
-            margin-left: 40px; /* Adjust space for pen */
+            margin-left: 40px; /* Space for the pen */
         }
+
         .box {
             height: 7rem;
-            width: 9rem;
-            border-style: solid;
+            width: 30rem; /* Wider box for longer text */
+            border: 2px solid #333;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* Align text to the left */
+            position: relative;
+            padding-left: 60px; /* Padding for the pen */
+            background-color: #fff;
+            overflow: hidden; /* Hide overflow for clean effect */
         }
 
         @keyframes movePen {
@@ -54,7 +59,7 @@
     <div class="container">
         <img src="https://github.com/Divyanshu-85/Required-Document/raw/main/PEN.png" alt="Pen" class="pen" id="pen">
         <div class="box">
-            <div id="text" class="text">Hello, this is an auto-typing text effect!</div>
+            <div id="text" class="text"></div>
         </div>
     </div>
     <script>
@@ -64,7 +69,6 @@
         let index = 0;
 
         function typeText() {
-            textElement.textContent = ""; // Clear the text for typing effect
             function typeNext() {
                 if (index < message.length) {
                     textElement.textContent += message.charAt(index);
