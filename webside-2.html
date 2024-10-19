@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Downloader</title>
+    <title>Auto Writing Effect</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,46 +11,54 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
+            background-color: #f9f9f9;
         }
 
         .container {
-            text-align: center;
+            position: relative;
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
+        .pen {
+            width: 50px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: writing 0.5s infinite alternate;
         }
 
-        button:hover {
-            background-color: #45a049;
+        .text {
+            font-size: 24px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid;
+            display: inline-block;
+        }
+
+        @keyframes writing {
+            0% { top: 0; }
+            100% { top: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>File Downloader</h1>
-        <button id="downloadBtn">Download PDF File</button>
+        <img src="pen.png" alt="Pen" class="pen" id="pen">
+        <div id="text" class="text"></div>
     </div>
     <script>
-        document.getElementById('downloadBtn').addEventListener('click', function() {
-            const pdfUrl = 'path/to/your/file.pdf'; // Update this path to your PDF file
-            const filename = 'https://github.com/Divyanshu-85/Required-Document/blob/main/IMG_20241013_124219.jpg'; // The name for the downloaded file
+        const textElement = document.getElementById('text');
+        const text = "Hello, this is an auto writing effect!";
+        let index = 0;
 
-            const link = document.createElement('a');
-            link.href = pdfUrl;
-            link.download = filename;
+        function type() {
+            if (index < text.length) {
+                textElement.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(type, 100); // Adjust the speed here
+            }
+        }
 
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
+        type();
     </script>
 </body>
 </html>
