@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Writing Effect</title>
+    <title>Auto Text with Moving Pen</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f9f9f9;
         }
 
         .container {
@@ -19,46 +19,52 @@
         }
 
         .pen {
-            width: 50px;
             position: absolute;
-            top: 0;
-            left: 0;
-            animation: writing 0.5s infinite alternate;
+            width: 30px; /* Adjust size as needed */
+            animation: movePen 0.5s forwards;
         }
 
         .text {
             font-size: 24px;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 2px solid;
+            white-space: pre; /* Preserve whitespace */
             display: inline-block;
+            margin-left: 40px; /* Adjust space for pen */
         }
 
-        @keyframes writing {
-            0% { top: 0; }
-            100% { top: 10px; }
+        @keyframes movePen {
+            0% {
+                top: 0;
+                left: 0;
+            }
+            100% {
+                top: -10px; /* Adjust vertical position */
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/PEN.png" alt="Pen" class="pen" id="pen">
+        <img src="https://github.com/Divyanshu-85/Required-Document/raw/main/PEN.png" alt="Pen" class="pen" id="pen">
         <div id="text" class="text"></div>
     </div>
     <script>
         const textElement = document.getElementById('text');
-        const text = "Hello, this is an auto writing effect!";
+        const penElement = document.getElementById('pen');
+        const message = "Hello, this is an auto-typing text effect!";
         let index = 0;
 
-        function type() {
-            if (index < text.length) {
-                textElement.innerHTML += text.charAt(index);
+        function typeText() {
+            if (index < message.length) {
+                textElement.textContent += message.charAt(index);
                 index++;
-                setTimeout(type, 100); // Adjust the speed here
+                penElement.style.left = `${textElement.offsetWidth}px`; // Move pen with text
+                setTimeout(typeText, 100); // Adjust typing speed
+            } else {
+                penElement.style.display = 'none'; // Hide pen after typing
             }
         }
 
-        type();
+        window.onload = typeText;
     </script>
 </body>
 </html>
