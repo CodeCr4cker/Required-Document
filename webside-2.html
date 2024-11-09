@@ -1,89 +1,1583 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Text with Moving Pen</title>
+    <title>Divyanshu Pandey</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+html{
+    --white: #ffffff;
+    --black: #000;
+      --primary-pink: #ff0000;
+      --secondary-grey: rgb(43, 255, 0);
+      --secondary-pink: rgb(76, 0, 255);
+}
+*{
+  margin: 0;
+  padding: 0;
+}
+.text{
+            text-decoration: none;
+            color: white;
+            margin-right: 2rem;                        
+        }
+       
+        .chat-container {
+            position: absolute; 
+            top: 200px; 
+            right: 20px; 
+            width: 22rem;
+            max-height: 36rem;
+            z-index: 10; 
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            color: white;
+            font-size: 1.3rem;
+            text-align: center;
+            border-radius: 2rem;
+            padding: 1rem;
+            display: none; 
+        }
+        .head{
+            height: 5rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+            border-top-right-radius: 3rem;
         }
 
-        .container {
-            position: relative;
+        .chatbox {
+            height: 30rem;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            padding: 10px;
+            border-radius: 2rem;
         }
 
-        .pen {
-            position: absolute;
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .message {
+            margin: 10px 0;
+        }
+
+        .user-message {
+            text-align: right;
+            background-color: #007BFF;
+            padding: 0.5rem;
+            border-radius: 10px;
+            color: white;
+            max-width: 70%;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            text-align: left;
+            background-color: #343A40;
+            padding: 0.5rem;
+            border-radius: 10px;
+            color: white;
+            max-width: 70%;
+            margin-right: auto;
+        }
+
+        button {
+            height: 2rem;
+            width: 5rem;
+        }
+
+        #userInput {
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            height: 2rem;
+            width: 14rem;
+        }
+
+        .chat-icon {
+             position: fixed; 
+            bottom: 45px; 
+            right: 35px;
+            background-color: white;
+            border-radius: 50%;
+             padding: 10px; 
+             cursor: pointer; 
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .pic1 {
             width: 50px;
-            animation: movePen 0.5s forwards;
+            height: 50px;
         }
 
-        .text {
-            font-size: 24px;
-            white-space: pre;
-            display: inline-block;
-            margin-left: 40px; /* Space for the pen */
+        .typing-indicator {
+            font-style: italic;
+            margin: 10px 0;
+            text-align: left;
         }
 
-        .box {
-            height: 7rem;
-            width: 30rem; /* Wider box for longer text */
-            border: 2px solid #333;
+        .quick-replies {
             display: flex;
-            align-items: center;
-            justify-content: flex-start; /* Align text to the left */
-            position: relative;
-            padding-left: 60px; /* Padding for the pen */
-            background-color: #fff;
-            overflow: hidden; /* Hide overflow for clean effect */
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 10px 0;
         }
 
-        @keyframes movePen {
+        .quick-replies button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .quick-replies button:hover {
+            background-color: #0056b3;
+        }
+
+         .info{
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255);
+            height: 15rem;
+            width: 30rem;
+            color: white;
+            font-size: 1.3rem;
+            text-align: center;
+            border-top-left-radius: 3rem;
+            border-top-right-radius: 3rem;
+            border-bottom-left-radius: 3rem;
+            border-bottom-right-radius: 3rem;
+            position: absolute;
+            top: 50%;
+            z-index: -2;
+            margin-top: 4rem; 
+         }
+         .sidebar {
+            position: fixed;
+            left: -290px;
+            top: 0;
+            height: 47rem;
+            width: 250px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255);
+            transition: left 0.3s ease;
+            color: white;
+            border-top-right-radius: 3rem;
+            border-bottom-right-radius: 3rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            left: 10px;
+            top: 10px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            color: white;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* Media Queries for devices with a width of 767px or smaller */
+        @media (min-width: 200px) and (max-width: 800px) {
+            body {
+                flex-direction: column;
+                justify-content: center;
+            }
+
+ 
+
+
+            .sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            height: 40rem;
+            text-align: center;
+            width: 160px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255);
+            transition: left 0.3s ease;
+            color: white;
+            border-top-right-radius: 3rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+         
+            .circle {
+                height: 12rem;
+                width: 12rem;
+                position: relative; 
+                animation: moveCircle 4s infinite ease-in-out; 
+            }
+            .chat-icon {
+             position: fixed; 
+            bottom: 45px; 
+            right: 96rem;
+            background-color: white;
+            border-radius: 50%;
+             padding: 10px; 
+             cursor: pointer; 
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+        }
+            @keyframes moveCircle {
             0% {
-                top: 0;
-                left: 0;
+                transform: scale(0);
+                }
+            25% {
+                transform: scale(1);
+            
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            75% {
+                transform: scale(1);
             }
             100% {
-                top: -10px; /* Adjust vertical position */
+                transform: scale(0);
             }
         }
-    </style>
+            .pic {
+                height: 10rem;
+                width: 10rem;
+            }
+
+            .chat-container {
+            position: absolute; 
+            top: 200px; 
+            right: 50px; 
+            width: 15rem;
+            max-height: 18rem;
+            z-index: 10; 
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            color: white;
+            font-size: 1.3rem;
+            text-align: center;
+            border-radius: 3rem;
+            padding: 1rem;
+            display: none; 
+        }
+
+
+        .book{
+            height: 35rem;
+            width: 5rem;
+        }
+
+        .chatbox {
+            height: 12rem;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 3rem;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .message {
+            margin: 10px 0;
+        }
+
+        .user-message {
+            text-align: right;
+            background-color: #007BFF;
+            padding: 0.5rem;
+            border-radius: 10px;
+            color: white;
+            max-width: 70%;
+            margin-left: auto;
+            font-size: 11px;
+        }
+
+        .bot-message {
+            text-align: left;
+            font-size: 11px;
+            background-color: #343A40;
+            padding: 0.5rem;
+            border-radius: 10px;
+            color: white;
+            max-width: 70%;
+            margin-right: auto;
+        }
+
+        .pro{
+            height: 5rem;
+            width: 5rem;
+            border-radius: 12rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button {
+            height: 1rem;
+            width: 3rem;
+            font-size: 11px;
+        }
+        .msg{
+            height: 2rem;
+            width: 4rem;
+            font-size: 10px;
+        }
+
+        #userInput {
+            backdrop-filter: blur(20px);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+            height: 1rem;
+            width: 8rem;
+        }
+
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .pic1 {
+            width: 50px;
+            height: 50px;
+        }
+
+        .typing-indicator {
+            font-style: italic;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .quick-replies {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .quick-replies button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .quick-replies button:hover {
+            background-color: #0056b3;
+        }
+            .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border-radius: 50%;
+            padding: 10px;       
+            margin-bottom: 10rem;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+        }
+
+            .info {
+                width: 80%;
+                height: auto;
+                margin: 2rem;
+                font-size: 1rem;
+                padding: 0.1rem;
+            }  
+
+            .flipbook .leaf {
+                 width: 50%; /* This keeps the leaf width at half of the flipbook's width */
+            }
+
+            .controls {
+                 width: 90vw;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1em;
+  }
+
+  .button1 {
+    width: 40%;
+    height: 2.5em;
+    font-size: 12px;
+  }
+}
+ 
+h1, h2, h4{
+    color: var(--black);
+}
+h1{
+    font-size: 3.9rem;
+    font-family: 'Play', sans-serif;
+    color: #000000;
+} 
+ h2{
+    font-size: 1.9rem;
+    color: rgb(0, 0, 0);
+}
+h3{
+    font-size: 3rem;
+    color: var(--primary-pink);
+}
+h4{
+    font-size: 2rem;
+}
+            
+.primary-btn{
+    border: .1rem solid var(--primary-pink);
+    background: var(--primary-pink);
+    font-size: 2.1rem;
+    border-radius: 5rem;
+    color: var(--white);
+    padding: .6rem 1.5rem;
+}
+
+ .bg-black{
+    background: var(--black);
+} 
+
+
+.section{
+  background-image: url("https://cdn.pixabay.com/photo/2020/06/17/18/03/lights-5310589_640.jpg");
+    padding: 6rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+  .container{
+
+
+
+
+
+    width: 80%;
+    margin: auto;
+    padding: 0 2rem;
+}
+.row-conatainer, .column-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.row-conatainer{
+    gap: 7rem;
+}
+.column-container{
+    flex-direction: column;
+    gap: 3rem;
+    text-align: center;
+    font-size: 4rem;
+}
+
+.content{
+    max-width: 50%;
+    }
+
+
+.top-background{
+    width: 100%;
+    height: 50rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://wallpapercave.com/wp/wp9127446.jpg"); 
+}
+.img-container{
+    width: 30rem;
+    margin-left: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    padding: 1rem;
+    height: 18rem;
+    position: relative; 
+    animation: moveCircle 4s infinite ease-in-out; 
+    width: 18rem;
+    box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.5);
+   }
+
+   .pic {
+    border-radius: 50%;
+    height: 15rem;
+    width: 15rem;
+        }
+
+
+
+
+
+
+
+
+
+   @keyframes moveCircle {
+            0% {
+                transform: scale(1);
+                }
+            25% {
+                transform: scale(1.1);
+            
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            75% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+
+
+
+
+
+
+input,textarea{
+    width: 100%;
+    border: none;
+    border-radius: .2rem;
+    padding: .9rem 1rem;
+    resize: none;
+    font-size: 1.4rem;
+}
+input:focus ,textarea:focus{
+    outline: .1rem solid var(--primary-pink);
+
+}
+                                    /* Footer */
+.footer-section{
+    padding: 1rem;
+    text-align: center;
+}
+#contact{
+    margin-top: 12rem;
+    color: Red;
+    text-align: center;
+  }
+  .contact-{
+        color: Red;
+    text-align: center;
+}
+
+
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+/* .video{
+  /* z-index: -9; */
+  /* height: 50rem; */
+/* } */ 
+
+
+
+
+      /* background-image: linear-gradient(45deg, rgb(255, 255, 255), rgb(82, 81, 81), rgb(0, 0, 0)); */
+    }
+    #tog:hover{
+      color: rgb(0, 0, 0);
+      background-image: linear-gradient(45deg, green, white, orange);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.door-container {
+      width: 400px;
+  height: 300px;
+  position: absolute; /* Changed from relative to absolute for centering */
+  top: 7rem; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjusts to center accurately */
+  perspective: 1000px;
+    }
+    .door {
+      /* padding-left: 15rem; */
+      width: 50%;
+      height: 50rem;
+      position: absolute;
+      background-color: #A0522D;
+      transition: transform 1s ease;
+      transform-origin: left;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    .left-door {
+      left: 0;
+      transform-origin: left center;
+      border-top-left-radius: 20rem;
+    }
+    .right-door {
+      right: 0;
+      transform-origin: right center;
+      border-top-right-radius: 20rem;
+    }
+    .open-left {
+      transform: rotateY(-90deg);
+    }
+    .open-right {
+      transform: rotateY(90deg);
+    }
+    .door-content {
+
+      /* padding-left: 15rem; */
+      background-image: url(https://images.wallpaperscraft.com/image/single/starry_sky_milky_way_night_124665_1366x768.jpg);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 2rem;
+      z-index: -1;
+      
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .door-container.opened .door-content {
+      opacity: 1;
+      cursor: pointer;
+    }
+    .gateman {
+      margin-top: 5rem;
+      position: absolute;
+      top: 8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30rem;
+      z-index: 5;
+      cursor: pointer;
+      transition: opacity 1s ease;
+    }
+    .door-container.opened .gateman {
+      opacity: 0;
+    }
+    .login-container {
+      padding: 20px;
+      margin-top: 12rem;
+      border-radius: 8px;
+      text-align: center;
+      width: 300px;
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      color: white;
+      display: none;
+    }
+    h4 {
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+      color: red;
+      font-family: chiller;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 5rem;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #message {
+      color: red;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .flash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .hidden-content {
+      width: 0;
+      height: 100vh;
+      background-image: url(https://images.wallpaperscraft.com/image/single/starry_sky_milky_way_night_124665_1366x768.jpg);
+      background-size: cover;
+      /* color: rgb(175, 18, 18); */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      overflow: hidden;
+      /* transition: width 1s ease; */
+    }
+    .main{
+      padding-left: 15rem;
+    }
+    .cover1{
+      /* background-image: url(6.jpeg); */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 2rem;
+
+             }
+    .hidden-content.expanded {
+      width: 100%;
+    }
+/* book part start */
+.itz-me {
+            height: 37rem;
+            border-radius: 2rem;
+        }
+
+        .book {
+            padding-left: 2.5rem;
+            margin-top: 50rem;
+            margin-bottom: 40rem;
+        }
+
+        .cover {
+            overflow: hidden;
+            z-index: -4;
+            width: 390px;
+            height: 639px;
+        }
+
+        .flipbook {
+            margin: 3em auto;
+            width: 700px;
+            height: 600px;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .flipbook .leaf {
+            position: absolute;
+            transform-style: preserve-3d;
+            height: 100%;
+            width: 50%;
+            background-color: #fff;
+            left: 50%;
+            transition: transform 1s;
+            transform: rotate3d(0, 1, 0, 0deg);
+            transform-origin: left 0px;
+        }
+
+        .flipbook .leaf .page {
+            transform-style: preserve-3d;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+        }
+
+        .flipbook .leaf .page.front {
+            transform: rotate3d(0, 1, 0, 0deg) translate3d(0, 0, 0.1px);
+        }
+
+        .flipbook .leaf .page.back {
+            transform: rotate3d(0, 1, 0, 180deg) translate3d(0, 0, 0.1px);
+        }
+
+        .pageNumber {
+            font-size: 0.95em;
+            position: absolute;
+            bottom: 0.5em;
+        }
+
+        .front .pageNumber {
+            right: 0.75em;
+        }
+
+        .back .pageNumber {
+            left: 0.75em;
+        }
+
+        h1, h2, h3 {
+            font-family: cursive;
+        }
+        
+    #question{
+      font-family: chiller;
+      
+    }
+    .flipbook {
+  animation: up-down 1s ease-in-out infinite;
+  
+}
+        @keyframes up-down {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px); /* Move up */
+  }
+  100% {
+    transform: translateY(0); /* Move back down */
+  }
+        }
+
+/* about hide part */
+
+  /* Initial hidden state for the div */
+        .hidden {
+            display: none;
+        }
+
+        /* Style for the div when it's shown */
+        #aboutDiv {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        /* Animation when the div becomes visible */
+        #aboutDiv.visible {
+            opacity: 1;
+            /* transform: translateY(0); */
+        }
+
+
+
+
+
+
+
+
+
+
+  </style> 
+
+   
 </head>
 <body>
-    <div class="container">
-          <div class="box">
-            <img src="https://github.com/Divyanshu-85/Required-Document/raw/main/PEN.png" alt="Pen" class="pen" id="pen">
-   
-            <div id="text" class="text"></div>
+  <div class="sidebar" id="sidebar">
+    <div class="head"></div>
+    <a href="#home" onclick="toggleSidebar()" >Home</a>
+    <a href="#profile" onclick="toggleSidebar()" >Profile</a>
+    <a href="https://rawcdn.githack.com/Divyanshu-85/Required-Document/d81aa8e0f0cd6de1277fad4ca97a1a541048130d/Best login form.html" onclick="toggleSidebar()" >Login</a>
+    <a href="#services" onclick="toggleSidebar()" >Services</a>
+    <a href="#contact" onclick="toggleSidebar()" >Contact</a>
+    <a href="#about" id="aboutLink" onclick="toggleSidebar()" >About</a>
+    <div class="chat-icon" onclick="toggleChat()">
+        <img src="https://img.icons8.com/?size=100&id=nToPp1ZMxcSe&format=png&color=000000" class="pic1" alt="Chat Icon">
+    </div>
+</div>
+<div class="sidebar-toggle" id="tog" onclick="toggleSidebar()">☰ Menu</div>
+  <!-- navbar starts -->
+  <!-- <div> -->
+  <!-- <header>
+    <a href="#" class="logo">Divyanshu Pandey</a>
+</header> -->
+<!-- </div> -->
+                            <!-- #first Section -->
+            <!-- <div style="background-color: rgb(61, 60, 60);"> -->
+         <section class="top-background">
+          <div class="container">
+         <div class="row-conatainer">
+            <div class="content">
+               
+
+
+              
+
+
+
+
+
+
+
+
+
+
+                <h3>Hello !</h3>
+                <h1>I'am Divyanshu Pandey</h1>
+                <h2>Explore the journey of HTML & CSS.</h2>
+                <p>Hello! I'm Divyanshu Pandey, a Class 11<sup>th</sup> student passionate about CSS and HTML.</p>
+
+                 
+              </div>
+             <div class="img-container" alt="Divyanshu">
+              <img src="https://github.com/Divyanshu-85/project/blob/main/me.jpg?raw=true" class="pic" alt="Profile Picture of Divyanshu Pandey">
+             </div>    
+                 </div>
+                </div>
+                 </section>
+
+
+
+                 <div class="chat-container" id="chat-container">
+                  <div class="chatbox" id="chatbox"></div>
+                  <div class="quick-replies" id="quick-replies">
+                      <button class="msg" onclick="sendQuickReply('Tell me a joke')">Some joke</button>
+                      <button class="msg" onclick="sendQuickReply('Fun fact')">Fun fact</button>
+                      <button class="msg" onclick="sendQuickReply('Help')">Help</button>
+                  </div>
+                  <input type="text" id="userInput" placeholder="Type your message...">
+                  <button onclick="sendMessage()">Send</button>
+                  <div class="typing-indicator" id="typing-indicator" style="display: none;">Chatbot is typing...</div>
+              </div>
+
+                         
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div id="aboutDiv" class="hidden">
+<div class="door-container">
+  <div class="door left-door"><img src="https://github.com/Divyanshu-85/Required-Document/blob/main/2.jpg?raw=true" class="cover1"></div>
+  <div class="door right-door"><img src="https://github.com/Divyanshu-85/Required-Document/blob/main/1.jpg?raw=true" class="cover1"></div>
+  <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/gatemen.png?raw=true" alt="Gateman" class="gateman" id="gateman">
+  <div class="door-content" id="doorContent">
+    Welcome to the Hidden World!
+  </div>
+</div>
+<div class="main">
+<div class="login-container" id="loginForm">
+  <h4>I am Devil</h4>
+  <p id="question"></p>
+  <input type="text" id="answer" placeholder="Enter your answer" required>
+  <button onclick="checkAnswer()">Submit</button>
+  <p id="message"></p>
+</div>
+
+<div class="flash" id="flashEffect"></div>
+
+
+<div class="hidden-content" id="hiddenContent">
+
+  <div class="bookbox">
+    <div class="book">
+        <div class="flipbook centered" id="flipbook">
+            <div class="leaf">
+                <div class="page front title external" style="background-color:#8d99ae; display: flex; align-items: center; justify-content: center;">
+                    <h1 style="font-size: 2em; color: #fff;"><img src="https://github.com/Divyanshu-85/Required-Document/blob/main/front.jpg?raw=true" class="cover"></h1>
+                </div>
+                <div class="page back" style="background-color:#2a9d8f;">
+                    <div class="pageNumber">i</div>
+                    <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/IMG_20241013_124219.jpg?raw=true1" class="itz-me" alt="" style="width:102%">
+                </div>
+            </div>
+            <div class="leaf">
+                <div class="page front" style="background-color:#2a9d8f;">
+                    <div class="pageNumber">ii</div>
+                    <h2>Contents</h2>
+                    <div class="contents-row">
+                        <div class="text">Introduction</div>
+                        <div class="spacer"></div>
+                        <div class="text">1</div>
+                    </div>
+                    <div class="contents-row">
+                        <div class="text">Passion</div>
+                        <div class="spacer"></div>
+                        <div class="text">3</div>
+                    </div>
+                </div>
+                <div class="page back" style="background-color:#e9c46a;">
+                    <div class="pageNumber">1</div>
+                    <h2>Introduction</h2>
+                    <p>Hello! My name is Divyanshu Pandey, and I’m excited to introduce myself. I am 16 years old and currently live in Naini Prayagraj. I have a background in programming and coding, and I’m passionate about it.</p>
+                    <h1>Shayari</h1>
+                    <p>प्रोग्रामिंग का जादू, समझ पाना है मुश्किल।<br>कोड के हर अल्गोरिदम में, छिपा है एक नज़दीक सफर का सिलसिला।</p>
+                </div>
+            </div>
+            <div class="leaf">
+                <div class="page front" style="background-color:#e9c46a;">
+                    <div class="pageNumber">2</div>
+                </div>
+                <div class="page back" style="background-color:#f4a261;">
+                    <div class="pageNumber">3</div>
+                    <h2>Passion</h2>
+                    <p>कोड लिखते हैं जब हम, जैसे रचते हैं कोई गीत,<br>हर सिम्पल फंक्शन में छुपा है एक गहरा मीत।</p>
+                    <br>
+                    <p>Signature....<br>Divyanshu</p>
+                </div>
+                <div class="page back external" style="background-color:#8d99ae; display: flex; align-items: center; justify-content: center;">
+                    <h1 style="font-size: 2em; color: #fff;"><img src="https://github.com/Divyanshu-85/Required-Document/blob/main/back.jpg?raw=true" class="cover"></h1>
+                </div>
+            </div>
         </div>
     </div>
-    <script>
-        const textElement = document.getElementById('text');
-        const penElement = document.getElementById('pen');
-        const message = "Hello, this is an auto-typing text effect!";
-        let index = 0;
+</div>
 
-        function typeText() {
-            function typeNext() {
-                if (index < message.length) {
-                    textElement.textContent += message.charAt(index);
-                    index++;
-                    penElement.style.left = `${textElement.offsetWidth}px`; // Move pen with text
-                    setTimeout(typeNext, 100); // Adjust typing speed
-                } else {
-                    penElement.style.display = 'none'; // Hide pen after typing
-                }
+
+
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            </div>
+          
+             <section class="section">
+             
+                <div class="container">
+                    <div class="column-container">
+                        <div class="content">
+                            <h1 class="contact-">Get in Touch</h1>
+                            
+                        </div>
+                        <form>
+                            <input type="text" placeholder="Username" required="">
+                            <input type="contect-number" placeholder="Phone Number" required="">
+                            <input type="email" placeholder="Email Address" required="">
+                            <textarea placeholder="Type Your message here" rows="6" required=""></textarea>
+                            <input type="submit" value="Send Message" class="primary-btn">
+                        </form>
+                    </div>
+                </div>
+        </section>
+
+               </main>
+                                <!-- #Footer -->
+                 <footer class="footer-section bg-black">
+                  <div class="container">
+                  <pre>© Divyanshu Pandey</pre>
+                   
+                      </div>
+                </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <script>
+let userName = "";
+  let doorsOpened = false;
+  const questions = [
+    { question: "Who are you, What is your name?", answer: "" },
+    { question: "{name}, Why you have came here?", answer: "For Reading The Book" },
+    { question: "{name}, ok but for Reading the book solve the riddle", answer: "OK" },
+    { question: "{name}, Ek aisi kitaab hai jise khol kar padho to aapko sab kuch samajh aa jata hai, par jab band karte ho toh sab bhool jate ho. Wo kya hai?", answer: "Dreams" }
+  ];
+  
+  let currentQuestionIndex = 0;
+  const questionElement = document.getElementById("question");
+
+  function displayQuestion() {
+    let questionText = questions[currentQuestionIndex].question.replace("{name}", userName);
+    let i = 0;
+    questionElement.textContent = ""; // Clear question element
+    
+    function typeWriter() {
+      if (i < questionText.length) {
+        questionElement.textContent += questionText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50); // Speed of typing effect
+      }
+    }
+    typeWriter();
+  }
+
+  function openDoors() {
+    const doorContainer = document.querySelector('.door-container');
+    const leftDoor = document.querySelector('.left-door');
+    const rightDoor = document.querySelector('.right-door');
+    
+    leftDoor.classList.add('open-left');
+    rightDoor.classList.add('open-right');
+    doorContainer.classList.add('opened');
+    doorsOpened = true;
+  }
+
+  function checkAnswer() {
+    const userAnswer = document.getElementById("answer").value.trim();
+    const messageElement = document.getElementById("message");
+    
+    if (currentQuestionIndex === 0) {
+      userName = userAnswer;
+      currentQuestionIndex++;
+      document.getElementById("answer").value = "";
+      displayQuestion();
+      return;
+    }
+    
+    if (currentQuestionIndex === questions.length - 1) {
+      if (userAnswer.toLowerCase() === questions[currentQuestionIndex].answer.toLowerCase()) {
+        messageElement.style.color = "green";
+        messageElement.textContent = "Correct answer. Access Granted!";
+        setTimeout(() => {
+          openDoors();
+          document.querySelector('.login-container').style.display = 'none';
+        }, 500);
+      } else {
+        messageElement.style.color = "red";
+        messageElement.textContent = "Incorrect answer. Access Denied!";
+      }
+    } else {
+      const correctAnswer = questions[currentQuestionIndex].answer;
+        
+      if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        currentQuestionIndex++;
+        document.getElementById("answer").value = "";
+        displayQuestion();
+        messageElement.textContent = "";
+      } else {
+        messageElement.style.color = "red";
+        messageElement.textContent = "Incorrect answer. Try again!";
+      }
+    }
+  }
+  
+  document.getElementById("gateman").addEventListener("click", () => {
+    if (!doorsOpened) {
+      document.getElementById("loginForm").style.display = 'block';
+      displayQuestion(); // Start typing effect when login form becomes visible
+    }
+  });
+
+  document.getElementById("doorContent").addEventListener("click", () => {
+    if (doorsOpened) {
+      const flashEffect = document.getElementById("flashEffect");
+      const hiddenContent = document.getElementById("hiddenContent");
+      
+      flashEffect.style.opacity = "1";
+      setTimeout(() => {
+        flashEffect.style.opacity = "0";
+        document.querySelector('.door-container').style.display = 'none';
+        hiddenContent.classList.add("expanded");
+      }, 500);
+    }
+  });
+
+
+//   book area
+
+document.addEventListener("DOMContentLoaded", function() {
+            new FlipBook(document.getElementById("flipbook"));
+        });
+
+        class FlipBook {
+            constructor(bookElem) {
+                this.elems = {
+                    book: bookElem,
+                    leaves: bookElem.querySelectorAll(".leaf")
+                };
+                this.currentPagePosition = 0;
+                this.setupEvents();
+                this.turnPage(0);
             }
-            typeNext();
-        }
 
-        window.onload = typeText;
-    </script>
-</body>
-</html>
+            setPagePosition(page, position, index) {
+                let transform = `translate3d(0,0,${(position < 0 ? 1 : -1) * Math.abs(index)}px)`;
+                if (position < 0) {
+                    transform += " rotate3d(0, 1, 0, -180deg)";
+                    page.classList.add("turned");
+                } else {
+                    page.classList.remove("turned");
+                }
+                page.style.transform = transform;
+            }
+
+            turnPage(delta) {
+                this.currentPagePosition += delta;
+                if (this.currentPagePosition < 0) {
+                    this.currentPagePosition = 0;
+                    return;
+                }
+                if (this.currentPagePosition > this.elems.leaves.length) {
+                    this.currentPagePosition = this.elems.leaves.length;
+                    return;
+                }
+                this.elems.leaves.forEach((page, index) => {
+                    const pageNumber = index;
+                    this.setPagePosition(page, pageNumber - this.currentPagePosition, index);
+                });
+            }
+
+            setupEvents() {
+                this.elems.leaves.forEach((leaf, index) => {
+                    leaf.addEventListener("click", () => {
+                        if (index >= this.currentPagePosition) {
+                            this.turnPage(1);
+                        } else {
+                            this.turnPage(-1);
+                        }
+                    });
+                });
+            }
+        }
+// hide with about
+ // Get references to the link and the div
+ const aboutLink = document.getElementById('aboutLink');
+        const aboutDiv = document.getElementById('aboutDiv');
+
+        // Add click event listener to the "About" link
+        aboutLink.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+
+            if (aboutDiv.classList.contains('visible')) {
+                // If the div is visible, hide it
+                aboutDiv.classList.remove('visible');
+                setTimeout(() => aboutDiv.classList.add('hidden'), 500); // Delay hiding after animation
+            } else {
+                // If the div is hidden, show it
+                aboutDiv.classList.remove('hidden');
+                setTimeout(() => aboutDiv.classList.add('visible'), 10); // Trigger animation
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+                
+                  const jokes = [
+                      "Why don't scientists trust atoms? Because they make up everything!",
+                      "Why did the computer go to the doctor? It had a virus!",
+                      "Why do programmers prefer dark mode? Because light attracts bugs!",
+                      "Why did the programmer quit his job? Because he didn't get arrays!",
+                      "Why do Java developers wear glasses? Because they don't see sharp!",
+                      "How do you comfort a JavaScript bug? You console it!",
+                      "Why was the JavaScript developer sad? Because he didn't know how to 'null' his feelings.",
+                      "Why did the developer go broke? Because he used up all his cache!",
+                      "What is a programmer's favorite hangout place? Foo Bar!",
+                      "Why do programmers hate nature? It has too many bugs!",
+                      "How many programmers does it take to change a light bulb? None, that's a hardware problem!",
+                      "Why do Python programmers prefer the command line? Because they can't stand indentation errors!",
+                      // Add more jokes here...
+                  ];
+              
+                  const funFacts = [
+                      "Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old!",
+                      "A day on Venus is longer than a year on Venus!",
+                      "Bananas are berries, but strawberries aren't!"
+                  ];
+                  function toggleSidebar() {
+                      const sidebar = document.getElementById('sidebar');
+                      sidebar.classList.toggle('open');
+                  }
+              
+                  function toggleChat() {
+                      const chatContainer = document.getElementById("chat-container");
+                      chatContainer.style.display = (chatContainer.style.display === "none" || chatContainer.style.display === "") ? "block" : "none";
+                  }
+              
+                  document.getElementById("userInput").addEventListener("keydown", function(event) {
+                      if (event.key === "Enter") {
+                          sendMessage();
+                      }
+                  });
+              
+                  function sendMessage() {
+                      const userInput = document.getElementById("userInput");
+                      const userMessage = userInput.value.trim();
+              
+                      if (userMessage === "") return;
+              
+                      displayMessage(userMessage, "user-message");
+                      userInput.value = "";
+              
+                      const botResponse = getBotResponse(userMessage);
+                      displayAutoWritingMessage(botResponse, "bot-message");
+                  }
+              
+                  function displayMessage(message, className) {
+                      const chatbox = document.getElementById("chatbox");
+                      const messageDiv = document.createElement("div");
+                      messageDiv.className = `message ${className}`;
+                      messageDiv.textContent = message;
+                      chatbox.appendChild(messageDiv);
+                      chatbox.scrollTop = chatbox.scrollHeight;
+                  }
+              
+                  function displayAutoWritingMessage(message, className) {
+                      const chatbox = document.getElementById("chatbox");
+                      const messageDiv = document.createElement("div");
+                      const typingIndicator = document.getElementById("typing-indicator");
+                      messageDiv.className = `message ${className}`;
+                      chatbox.appendChild(messageDiv);
+              
+                      typingIndicator.style.display = "block";
+                      setTimeout(() => {
+                          typingIndicator.style.display = "none";
+                          let i = 0;
+                          function typeWriter() {
+                              if (i < message.length) {
+                                  messageDiv.textContent += message.charAt(i);
+                                  i++;
+                                  setTimeout(typeWriter, 50);
+                              }
+                          }
+                          typeWriter();
+                          chatbox.scrollTop = chatbox.scrollHeight;
+                      }, 1000);
+                  }
+              
+                  function getBotResponse(input) {
+                      const lowerInput = input.toLowerCase();
+                      const currentHour = new Date().getHours();
+                      let greeting;
+              
+                      if (currentHour < 12) {
+                          greeting = "Good morning!";
+                      } else if (currentHour < 18) {
+                          greeting = "Good afternoon!";
+                      } else {
+                          greeting = "Good evening!";
+                      }
+              
+                      if (lowerInput.includes("hello") || lowerInput.includes("hi")) {
+                          return `${greeting} How can I assist you?`;
+                      } else if (lowerInput.includes("bye")) {
+                          return "Goodbye! Take care, and see you soon!";
+                      } else if (lowerInput.includes("how are you")) {
+                          return "I'm just a bunch of code, but I'm functioning smoothly. Thanks for asking!";
+                      } else if (lowerInput.includes("tell me a joke")) {
+                          return jokes[Math.floor(Math.random() * jokes.length)];
+                      } else if (lowerInput.includes("fun fact")) {
+                          return funFacts[Math.floor(Math.random() * funFacts.length)];
+                      }
+              
+                      return "I'm sorry, I didn't understand that. Can you ask something else?";
+                  }
+              
+                  function sendQuickReply(message) {
+                      displayMessage(message, "user-message");
+                      const botResponse = getBotResponse(message);
+                      displayAutoWritingMessage(botResponse, "bot-message");
+                  }
+              
+                  window.onload = function() {
+              
+                  };
+              </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </body>
+                </html>
