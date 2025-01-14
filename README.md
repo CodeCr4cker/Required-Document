@@ -10,7 +10,7 @@
 <hr>
 <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/Gif/G%20I%20F%20-%20Geometrie%20Fluide%20-%20Preziosaghirlanda.gif "> 
 <hr>
-<img src="https://github.com/Divyanshu-85/Required-Document/blob/main/DP....gif.gif">
+<img src="https://github.com/Divyanshu-85/Required-Document/blob/main/DP....gif.gif" width="500">
 
 <hr>
 <a href="https://git.io/streak-stats">
