@@ -5,7 +5,7 @@
 </div>
 <hr>
 <div id="header" align="center">
-  <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/Gif/1e07006a913e1f2148cd01633e6b30ac.gif" width="100"/>
+  <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/Gif/1e07006a913e1f2148cd01633e6b30ac.gif" width="500"/>
 </div>
 <hr>
 <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/Gif/G%20I%20F%20-%20Geometrie%20Fluide%20-%20Preziosaghirlanda.gif "> 
