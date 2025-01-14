@@ -33,9 +33,7 @@
 
 
 
-### Countdown Timer Code
-
-```html
+### Countdown Timer
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
