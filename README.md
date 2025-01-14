@@ -50,8 +50,7 @@
 
 <p id="demo"></p>
 
-<script>
-<scr="https://github.com/Divyanshu-85/Required-Document/blob/main/web-doc/Count.js ">
+<script scr="https://github.com/Divyanshu-85/Required-Document/blob/main/web-doc/Count.js ">
 </script>
 
 </body>
