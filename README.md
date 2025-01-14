@@ -32,26 +32,3 @@
 
 
 
-
-### Countdown Timer
-<!DOCTYPE HTML>
-<html lang="en">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-  p {
-    text-align: center;
-    font-size: 60px;
-    margin-top: 0px;
-  }
-</style>
-</head>
-<body>
-
-<p id="demo"></p>
-
-<script scr="https://github.com/Divyanshu-85/Required-Document/blob/main/web-doc/Count.js ">
-</script>
-
-</body>
-</html>
