@@ -13,4 +13,45 @@
 
 
 
- <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/Skills_Animation_Dark.gif"> 
+ <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/Skills_Animation_Dark.gif">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+p {
+  text-align: center;
+  font-size: 60px;
+  margin-top: 0px;
+}
+</style>
+</head>
+<body>
+
+<p id="demo"></p>
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
