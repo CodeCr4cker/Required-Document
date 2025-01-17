@@ -1,14 +1,4 @@
-<img src="https://github.com/Divyanshu-85/Required-Document/blob/main/Gif/Book%201.gif">
-<hr>
-<div>
-  <img align="right" width="40%" src="https://github.com/Divyanshu-85/Required-Document/blob/main/Gif/HUD%20Element.gif">
-</div>
-<hr>
-<div id="header" align="center">
-  <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/Gif/1e07006a913e1f2148cd01633e6b30ac.gif" width="500"/>
-</div>
-<hr>
-<img src="https://github.com/Divyanshu-85/Required-Document/blob/main/Gif/G%20I%20F%20-%20Geometrie%20Fluide%20-%20Preziosaghirlanda.gif "> 
+<a href="https://softwareupdate.vmware.com/cds/vmw-desktop/ws/17.5.2/23775571/windows/core/VMware-workstation-17.5.2-23775571.exe.tar">download VMware</a>
 <hr>
 <img src="https://github.com/Divyanshu-85/Required-Document/blob/main/DP....gif.gif" width="500">
 
