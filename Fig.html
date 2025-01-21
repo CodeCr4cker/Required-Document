@@ -1,147 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Futuristic Fingerprint Scan UI</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Web Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
 
-    body, html {
-      height: 100%;
-      background: #0a0a0a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: 'Arial', sans-serif;
-    }
+        h1 {
+            color: #333;
+            margin-top: 50px;
+        }
 
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
 
-    .hud {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .scan-panel {
-      width: 300px;
-      height: 300px;
-      background: rgba(0, 0, 0, 0.8);
-      border-radius: 20px;
-      border: 2px solid #00e5ff;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .fingerprint-area {
-      width: 150px;
-      height: 150px;
-      border: 2px solid #00e5ff;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      background: rgba(0, 0, 0, 0.6);
-    }
-
-    .fingerprint {
-      width: 60px;
-      height: 60px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Fingerprint.svg/1024px-Fingerprint.svg.png') no-repeat center;
-      background-size: contain;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      opacity: 0;
-    }
-
-    .message {
-      font-size: 16px;
-      color: #00e5ff;
-      margin-top: 20px;
-      text-align: center;
-      letter-spacing: 1px;
-    }
-
-    .success {
-      color: #00ff00;
-      font-weight: bold;
-      opacity: 1;
-    }
-
-    .fail {
-      color: #ff0000;
-      font-weight: bold;
-      opacity: 1;
-    }
-
-    .hidden {
-      opacity: 0;
-    }
-  </style>
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="hud">
-      <div class="scan-panel">
-        <div id="fingerprintArea" class="fingerprint-area">
-          <div id="fingerprint" class="fingerprint"></div>
-        </div>
-        <div id="message" class="message">Place your finger on the scanner</div>
-      </div>
-    </div>
-  </div>
-  
-  <script>
-    const fingerprintArea = document.getElementById('fingerprintArea');
-    const fingerprint = document.getElementById('fingerprint');
-    const message = document.getElementById('message');
+    <h1>Welcome to My Web Page</h1>
+    <button id="colorButton">Change Background Color</button>
 
-    let scanning = false;
-
-    // Start scanning effect when clicking or touching the panel
-    fingerprintArea.addEventListener('click', () => {
-      if (scanning) return;
-      scanning = true;
-      fingerprint.classList.remove('hidden');
-      fingerprint.style.opacity = 1;
-      message.innerHTML = 'Scanning...';
-
-      // Simulate fingerprint scan success after 2 seconds
-      setTimeout(() => {
-        const success = Math.random() > 0.5; // Randomly simulate success/failure
-        if (success) {
-          fingerprint.style.opacity = 1;
-          fingerprint.style.transform = 'scale(1.2)';
-          message.innerHTML = 'Scan Successful';
-          message.classList.add('success');
-        } else {
-          fingerprint.style.opacity = 0;
-          message.innerHTML = 'Scan Failed. Try Again';
-          message.classList.add('fail');
-        }
-        
-        setTimeout(() => {
-          message.classList.remove('success', 'fail');
-          message.innerHTML = 'Place your finger on the scanner';
-          fingerprint.style.transform = 'scale(1)';
-          fingerprint.classList.add('hidden');
-          scanning = false;
-        }, 2000);
-      }, 2000); // Delay for scanning animation
-    });
-  </script>
+    <script>
+        document.getElementById('colorButton').addEventListener('click', function() {
+            const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33A1'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.backgroundColor = randomColor;
+        });
+    </script>
 </body>
 </html>
