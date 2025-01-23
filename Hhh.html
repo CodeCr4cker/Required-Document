@@ -4,7 +4,10 @@
 <title>Futuristic HUD</title>
 <style>
 body {
-  background-color: black;
+  background-color: #0d2840;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 0;
 }
 
 .hud-container {
@@ -14,6 +17,7 @@ body {
   margin: 50px auto;
   border: 2px solid #00a0ff;
   box-shadow: 0 0 20px #00a0ff;
+  overflow: hidden;
 }
 
 .hud-element {
@@ -33,6 +37,8 @@ body {
   left: 20px;
   width: 200px;
   height: 200px;
+  border-radius: 50%; /* Make the box circular */
+  background-color: rgba(0, 160, 255, 0.2);
 }
 
 .bars {
@@ -44,20 +50,31 @@ body {
 
 .bar {
   height: 20px;
+  width: 0%; /* Start with 0% width */
   margin-bottom: 5px;
   background-color: #00a0ff;
+  animation: increaseWidth 2s forwards;
 }
 
 .bar:nth-child(1) {
-  width: 80%;
+  animation-delay: 0s; /* First bar animates immediately */
 }
 
 .bar:nth-child(2) {
-  width: 50%;
+  animation-delay: 0.5s; /* Second bar animates slightly after the first */
 }
 
 .bar:nth-child(3) {
-  width: 20%;
+  animation-delay: 1s; /* Third bar animates slightly after the second */
+}
+
+@keyframes increaseWidth {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .circles {
@@ -83,9 +100,6 @@ body {
 .circle:nth-child(2) {
   background-color: #fff;
 }
-  .box{
-    border-radius: 50%;
-  }
 </style>
 </head>
 <body>
