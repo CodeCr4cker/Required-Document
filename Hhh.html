@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Futuristic HUD</title>
+<style>
+body {
+  background-color: #0d2840;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.hud-container {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  margin: 50px auto;
+  border: 2px solid #00a0ff;
+  box-shadow: 0 0 20px #00a0ff;
+}
+
+.hud-element {
+  position: absolute;
+  border: 1px solid #00a0ff;
+}
+
+.grid {
+  width: 100%;
+  height: 100%;
+  background-size: 10px 10px;
+  background-image: linear-gradient(to right, rgba(0, 160, 255, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 160, 255, 0.1) 1px, transparent 1px);
+}
+
+.box {
+  top: 20px;
+  left: 20px;
+  width: 200px;
+  height: 200px;
+}
+
+.bars {
+  top: 20px;
+  right: 20px;
+  width: 150px;
+  height: 100px;
+}
+
+.bar {
+  height: 20px;
+  margin-bottom: 5px;
+  background-color: #00a0ff;
+}
+
+.bar:nth-child(1) {
+  width: 80%;
+}
+
+.bar:nth-child(2) {
+  width: 50%;
+}
+
+.bar:nth-child(3) {
+  width: 20%;
+}
+
+.circles {
+  bottom: 20px;
+  left: 20px;
+  width: 200px;
+  height: 20px;
+}
+
+.circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #00a0ff;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.circle:nth-child(1) {
+  background-color: #fff;
+}
+
+.circle:nth-child(2) {
+  background-color: #fff;
+}
+</style>
+</head>
+<body>
+  <div class="hud-container">
+    <div class="grid"></div>
+    <div class="hud-element box"></div>
+    <div class="hud-element bars">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <div class="hud-element circles">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+  </div>
+</body>
+</html>
