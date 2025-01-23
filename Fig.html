@@ -3,122 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jarvis Interface</title>
+  <title>BLACKBOXAI Interface</title>
   <style>
+    /* Base Styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    body {
-      background-color: #1a1a1a;
-      color: white;
-      font-family: 'Arial', sans-serif;
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #0d1b2a; /* Deep blue background */
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
 
-    #jarvis-container {
-      text-align: center;
-      background-color: #333;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
-    }
-
-    #screen {
-      background-color: #000;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      width: 300px;
-      height: 200px;
-      overflow-y: scroll;
-    }
-
-    #output {
-      font-size: 18px;
-    }
-
-    #user-input {
-      width: 80%;
+    /* Container for the entire interface */
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      width: 90%;
+      height: 80%;
+      border: 2px solid #fff;
+      border-radius: 15px;
       padding: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
-      border: none;
-      font-size: 16px;
+      box-shadow: 0 0 30px rgba(0, 204, 255, 0.5);
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
     }
 
-    #submit-button {
-      padding: 10px;
-      margin-top: 10px;
-      background-color: #1e90ff;
-      border: none;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
+    /* Main Display Area */
+    .main-display {
+      width: 70%;
+      position: relative;
     }
 
-    #submit-button:hover {
-      background-color: #4682b4;
+    .large-box {
+      width: 100%;
+      height: 60%;
+      background-color: rgba(0, 255, 255, 0.2);
+      border: 2px solid #00ccff;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .header .progress-bar {
+      width: 100%;
+      height: 5px;
+      margin: 10px 0;
+      background-color: #444;
+      border-radius: 2px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    .header .progress-bar:nth-child(1) {
+      background-color: #00ccff;
+    }
+
+    .header .progress-bar:nth-child(2) {
+      background-color: #00b3b3;
+    }
+
+    /* Sidebar (Right) */
+    .sidebar {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .small-box {
+      width: 90%;
+      height: 25%;
+      background-color: rgba(0, 255, 255, 0.2);
+      border: 2px solid #00ccff;
+      border-radius: 8px;
+      margin: 10px 0;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    /* Footer (Bottom) */
+    .footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .circle {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: #00ccff;
+      margin: 0 5px;
+      box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
     }
   </style>
 </head>
 <body>
-  <div id="jarvis-container">
-    <div id="screen">
-      <div id="output">
-        <p>Welcome, Sir. How can I assist you?</p>
+  <div class="container">
+    <div class="main-display">
+      <div class="header">
+        <div class="progress-bar"></div>
+        <div class="progress-bar"></div>
       </div>
+      <div class="large-box"></div>
     </div>
-    <input type="text" id="user-input" placeholder="Type your command..." />
-    <button id="submit-button">Send</button>
+    <div class="sidebar">
+      <div class="small-box"></div>
+      <div class="small-box"></div>
+      <div class="small-box"></div>
+    </div>
+    <div class="footer">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
   </div>
 
   <script>
-    document.getElementById("submit-button").addEventListener("click", function() {
-      let userInput = document.getElementById("user-input").value;
-      let outputDiv = document.getElementById("output");
+    // Placeholder for future interactivity
+    // For example, this could control the progress bars or elements that should animate in response to certain events
 
-      if (userInput) {
-        let newMessage = document.createElement("p");
-        newMessage.textContent = `You: ${userInput}`;
-        outputDiv.appendChild(newMessage);
+    document.addEventListener('DOMContentLoaded', () => {
+      const progressBars = document.querySelectorAll('.progress-bar');
 
-        // Generate Jarvis's response
-        let jarvisResponse = getJarvisResponse(userInput);
-        let jarvisMessage = document.createElement("p");
-        jarvisMessage.textContent = `Jarvis: ${jarvisResponse}`;
-        outputDiv.appendChild(jarvisMessage);
-
-        // Scroll to the bottom of the screen
-        outputDiv.scrollTop = outputDiv.scrollHeight;
-
-        // Clear the input field
-        document.getElementById("user-input").value = "";
-      }
+      // Simulating the progress of the bars
+      let progress = 0;
+      setInterval(() => {
+        if (progress < 100) {
+          progress += 1;
+          progressBars.forEach(bar => {
+            bar.style.width = progress + '%';
+          });
+        }
+      }, 50);
     });
-
-    function getJarvisResponse(input) {
-      input = input.toLowerCase();
-
-      if (input.includes("hello")) {
-        return "Hello, Sir. How can I assist you today?";
-      } else if (input.includes("weather")) {
-        return "The weather is currently sunny with a temperature of 22°C.";
-      } else if (input.includes("time")) {
-        let now = new Date();
-        return `The current time is ${now.toLocaleTimeString()}.`;
-      } else if (input.includes("open chrome")) {
-        return "Opening Chrome browser...";
-      } else {
-        return "I'm sorry, I didn't understand that.";
-      }
-    }
   </script>
 </body>
 </html>
