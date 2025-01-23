@@ -1,92 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Creative Advertisement</title>
-  <style>
-    /* Basic Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<title>S.H.I.E.L.D. Files</title>
+<style>
+body {
+  font-family: sans-serif;
+  background-color: #000;
+  color: #fff;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f5f5f5;
-    }
+.container {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 2px solid #00a0e0;
+}
 
-    .ad-container {
-      background-color: #ff6347;
-      border-radius: 20px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      width: 400px;
-      height: 250px;
-      position: relative;
-      transform: scale(0.9);
-      transition: transform 0.3s ease;
-    }
+h1 {
+  text-align: center;
+  font-size: 24px;
+  color: #00a0e0;
+  margin-bottom: 20px;
+}
 
-    .ad-container:hover {
-      transform: scale(1);
-    }
+.section {
+  margin-bottom: 20px;
+}
 
-    .ad-content {
-      color: white;
-      text-align: center;
-      padding: 40px;
-    }
+.section-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 
-    .ad-content h1 {
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
+.stat-table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-    .ad-content p {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
+.stat-table td {
+  padding: 5px;
+  border: 1px solid #00a0e0;
+}
 
-    #ad-btn {
-      background-color: #fff;
-      color: #ff6347;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-    }
+.stat-table td:first-child {
+  width: 100px;
+}
 
-    #ad-btn:hover {
-      background-color: #ff4500;
-      color: white;
-      transform: scale(1.1);
-    }
-  </style>
+.picture {
+  width: 200px;
+  height: 250px;
+  border: 1px solid #00a0e0;
+  background-color: #000;
+}
+</style>
 </head>
 <body>
+<div class="container">
+  <h1>S.H.I.E.L.D. FILES</h1>
 
-  <div class="ad-container">
-    <div class="ad-content">
-      <h1>Big Sale Coming Soon!</h1>
-      <p>Get ready for exclusive offers</p>
-      <button id="ad-btn">Learn More</button>
-    </div>
+  <div class="section">
+    <div class="section-title">YOUR NAME</div>
+    <div class="section-title">HERO NAME</div>
+    <table class="stat-table">
+      <tr>
+        <td>NAME:</td>
+        <td>YOUR NAME</td>
+      </tr>
+      <tr>
+        <td>HERO NAME:</td>
+        <td>HERO NAME</td>
+      </tr>
+      <tr>
+        <td>AGE:</td>
+        <td>AGE</td>
+      </tr>
+      <tr>
+        <td>AFFILIATION:</td>
+        <td>THE AVENGERS</td>
+      </tr>
+      <tr>
+        <td>ABILITIES/POWERS:</td>
+        <td>
+          <ul>
+            <li>POWERS</li>
+            <li>POWERS</li>
+            <li>POWERS</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
   </div>
 
-  <script>
-    // Add a simple action when the button is clicked
-    document.getElementById('ad-btn').addEventListener('click', function() {
-      window.location.href = 'https://example.com'; // Change the URL to your destination
-    });
-  </script>
+  <div class="section">
+    <div class="section-title">STATS</div>
+    <table class="stat-table">
+      <tr>
+        <td>STRENGTH:</td>
+        <td>10/10</td>
+      </tr>
+      <tr>
+        <td>AGILITY:</td>
+        <td>10/10</td>
+      </tr>
+      <tr>
+        <td>ENDURANCE:</td>
+        <td>10/10</td>
+      </tr>
+      <tr>
+        <td>INTELLIGENCE:</td>
+        <td>10/10</td>
+      </tr>
+    </table>
+  </div>
 
+  <div class="section">
+    <div class="picture"></div>
+    <div class="picture"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">NOTES / SPECIAL ATTRIBUTES:</div>
+    <ul>
+      <li>EX: EYES CHANGE COLOR</li>
+      <li>EX: FLAMES COME OUT</li>
+      <li>OTHER</li>
+      <li>OTHER</li>
+    </ul>
+  </div>
+</div>
 </body>
 </html>
