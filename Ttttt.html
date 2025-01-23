@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI ID Card</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .id-card {
+      background-color: #ffffff;
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .profile .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .profile .name {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .profile .role {
+      color: #777;
+    }
+
+    .info {
+      margin-top: 15px;
+    }
+
+    .info-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .info-btn:hover {
+      background-color: #45a049;
+    }
+
+    .extra-info {
+      display: none;
+      margin-top: 15px;
+      text-align: left;
+      color: #333;
+    }
+
+    .extra-info p {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="id-card">
+    <div class="profile">
+      <img src="ai-avatar.png" alt="AI Avatar" class="avatar">
+      <h2 class="name">AI Assistant</h2>
+      <p class="role">AI Model</p>
+    </div>
+    <div class="info">
+      <button onclick="toggleInfo()" class="info-btn">Show More Info</button>
+      <div class="extra-info" id="extra-info">
+        <p><strong>Developer:</strong> OpenAI</p>
+        <p><strong>Version:</strong> GPT-4</p>
+        <p><strong>Status:</strong> Active</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleInfo() {
+      const info = document.getElementById("extra-info");
+      if (info.style.display === "none" || info.style.display === "") {
+        info.style.display = "block";
+      } else {
+        info.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>
