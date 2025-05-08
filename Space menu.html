@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Falling Stars with Toggle Sidebar</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    /* Sidebar - fully hidden by default */
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -220px; /* Start completely off-screen */
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      color: white;
+      padding: 20px;
+      transition: left 0.3s ease, opacity 0.3s ease;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Sidebar when visible */
+    #sidebar.visible {
+      left: 0;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Menu Button */
+    #menuBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 11;
+      background: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    /* SVG Sky and Stars */
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .star {
+      fill: white;
+      opacity: 0.8;
+      animation: fall var(--duration, 5s) linear infinite;
+      transform-origin: center;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .trail {
+      stroke: white;
+      stroke-width: 1;
+      opacity: 0.4;
+      animation: fall var(--duration, 5s) linear infinite;
+      transform-origin: center;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) translateX(100px) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* Sidebar links */
+    .sidebar-link {
+      display: block;
+      margin: 15px 0;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .sidebar-link:hover {
+      color: #f39c12;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menu Button -->
+  <button id="menuBtn">☰ Menu</button>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <h2>Sidebar Menu</h2>
+    <a href="#" class="sidebar-link">Link 1</a>
+    <a href="#" class="sidebar-link">Link 2</a>
+    <a href="#" class="sidebar-link">Link 3</a>
+    <p>Some content goes here...</p>
+  </div>
+
+  <!-- Sky with Falling Stars -->
+  <svg id="sky"></svg>
+
+  <!-- JavaScript -->
+  <script>
+    const svg = document.getElementById('sky');
+    const NUM_STARS = 80;
+
+    function createLoopingStar() {
+      const size = Math.random() * 1.5 + 0.5;
+      const startX = Math.random() * window.innerWidth;
+      const duration = (Math.random() * 2 + 2).toFixed(2);
+      const delay = (Math.random() * 5).toFixed(2);
+
+      const star = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      star.setAttribute("r", size);
+      star.setAttribute("cx", startX);
+      star.setAttribute("cy", -10);
+      star.setAttribute("class", "star");
+      star.style.setProperty('--duration', `${duration}s`);
+      star.style.setProperty('--delay', `${delay}s`);
+
+      const trail = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      trail.setAttribute("x1", startX);
+      trail.setAttribute("y1", -10);
+      trail.setAttribute("x2", startX - 10);
+      trail.setAttribute("y2", -20);
+      trail.setAttribute("class", "trail");
+      trail.style.setProperty('--duration', `${duration}s`);
+      trail.style.setProperty('--delay', `${delay}s`);
+
+      svg.appendChild(trail);
+      svg.appendChild(star);
+    }
+
+    for (let i = 0; i < NUM_STARS; i++) {
+      createLoopingStar();
+    }
+
+    // Toggle sidebar visibility
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+
+    // Function to close the sidebar
+    function closeSidebar() {
+      sidebar.classList.remove('visible');
+    }
+
+    // Add event listener to menu button to toggle sidebar
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('visible');
+    });
+
+    // Add event listeners to all sidebar links to close the sidebar when clicked
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', closeSidebar);
+    });
+  </script>
+
+</body>
+</html>
