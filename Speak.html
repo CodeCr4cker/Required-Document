@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Responsive Slideshow with Voice</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome App</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -38,7 +39,7 @@
     }
   </style>
 </head>
-<body onload="startSlideshow(); handleVoiceMobile();">
+<body>
 
   <h1>Welcome to Our Website</h1>
 
@@ -59,38 +60,42 @@
       slideIndex++;
       if (slideIndex > slides.length) { slideIndex = 1; }
       slides[slideIndex - 1].style.display = "block";
-      setTimeout(startSlideshow, 3000); // every 3 sec
+      setTimeout(startSlideshow, 3000);
     }
 
-    // Speak function
+    // Welcome Voice
     function speakWelcome() {
-      const msg = new SpeechSynthesisUtterance("Welcome to our website, sir");
-      const voices = window.speechSynthesis.getVoices();
-      msg.voice = voices.find(v => v.name.includes("Female") || v.name.includes("English")) || voices[0];
-      msg.lang = "en-US";
-      msg.pitch = 1;
-      msg.rate = 1;
-      speechSynthesis.speak(msg);
-    }
+      if ('speechSynthesis' in window) {
+        const msg = new SpeechSynthesisUtterance("Welcome to our website, sir");
+        const voices = speechSynthesis.getVoices();
+        msg.voice = voices.find(v => v.name.includes("Female") || v.name.includes("English")) || voices[0];
+        msg.lang = "en-US";
+        msg.pitch = 1;
+        msg.rate = 1;
 
-    // Detect mobile and set first-tap listener
-    function handleVoiceMobile() {
-      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-
-      if (isMobile) {
-        // Only run speakWelcome() on first user tap
-        const onFirstTap = () => {
-          speakWelcome();
-          document.removeEventListener('touchstart', onFirstTap);
-          document.removeEventListener('click', onFirstTap); // fallback
-        };
-        document.addEventListener('touchstart', onFirstTap, { once: true });
-        document.addEventListener('click', onFirstTap, { once: true }); // for some devices
+        if (speechSynthesis.getVoices().length === 0) {
+          speechSynthesis.onvoiceschanged = () => speechSynthesis.speak(msg);
+        } else {
+          speechSynthesis.speak(msg);
+        }
       } else {
-        // Desktop: speak immediately (if allowed)
-        window.speechSynthesis.onvoiceschanged = () => speakWelcome();
+        console.log("Speech synthesis not supported.");
       }
     }
+
+    // Cordova Device Ready
+    document.addEventListener("deviceready", function () {
+      startSlideshow();
+      speakWelcome();
+    }, false);
+
+    // If testing in browser (non-Cordova), fallback
+    window.addEventListener("load", function () {
+      if (!window.cordova) {
+        startSlideshow();
+        speakWelcome();
+      }
+    });
   </script>
 
 </body>
