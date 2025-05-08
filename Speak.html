@@ -2,46 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Responsive Website with Slideshow and Voice</title>
+  <title>Auto Slideshow with Welcome Voice</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
       text-align: center;
-      background-color: #f0f0f0;
-    }
-
-    h1 {
-      margin-top: 20px;
-      color: #333;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
     }
 
     .slideshow-container {
-      position: relative;
       max-width: 90%;
-      margin: 20px auto;
+      margin: auto;
     }
 
     .slide {
       display: none;
-      width: 100%;
     }
 
     .slide img {
       width: 100%;
-      height: auto;
       border-radius: 8px;
     }
 
-    /* Responsive design */
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* Media Query for Mobile */
     @media (max-width: 768px) {
       h1 {
-        font-size: 20px;
-      }
-
-      .slide img {
-        height: auto;
+        font-size: 22px;
       }
     }
   </style>
@@ -51,9 +44,9 @@
   <h1>Welcome to Our Website</h1>
 
   <div class="slideshow-container">
-    <div class="slide"><img src="https://via.placeholder.com/800x400?text=Image+1" alt="Image 1"></div>
-    <div class="slide"><img src="https://via.placeholder.com/800x400?text=Image+2" alt="Image 2"></div>
-    <div class="slide"><img src="https://via.placeholder.com/800x400?text=Image+3" alt="Image 3"></div>
+    <div class="slide"><img src="https://via.placeholder.com/800x400?text=Slide+1" alt="Slide 1"></div>
+    <div class="slide"><img src="https://via.placeholder.com/800x400?text=Slide+2" alt="Slide 2"></div>
+    <div class="slide"><img src="https://via.placeholder.com/800x400?text=Slide+3" alt="Slide 3"></div>
   </div>
 
   <script>
@@ -70,19 +63,24 @@
       setTimeout(startSlideshow, 3000); // Change image every 3 seconds
     }
 
-    // Text-to-Speech Welcome Voice
+    // Auto Voice (may be blocked on mobile unless user interacts)
     function speakWelcome() {
       if ('speechSynthesis' in window) {
         const msg = new SpeechSynthesisUtterance("Welcome to our website, sir");
-        const voices = window.speechSynthesis.getVoices();
+        const voices = speechSynthesis.getVoices();
         msg.voice = voices.find(v => v.name.includes("Female") || v.name.includes("English")) || voices[0];
         msg.lang = "en-US";
         msg.pitch = 1;
         msg.rate = 1;
-        // Slight delay for voices to load
-        setTimeout(() => window.speechSynthesis.speak(msg), 100);
-      } else {
-        console.log("Speech synthesis not supported.");
+
+        // Mobile browsers often block autoplay, so delay to allow voices to load
+        setTimeout(() => {
+          try {
+            speechSynthesis.speak(msg);
+          } catch (e) {
+            console.log("Voice autoplay blocked on mobile. Needs user interaction.");
+          }
+        }, 100);
       }
     }
   </script>
