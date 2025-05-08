@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Falling Stars with Centered Carousel</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      position: fixed;
+      top: 0;
+      left: -220px;
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      color: white;
+      padding: 20px;
+      transition: left 0.3s ease, opacity 0.3s ease;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #sidebar.visible {
+      left: 0;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #menuBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 11;
+      background: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    /* Carousel container centered */
+    #carouselContainer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 800px;
+      height: 250px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+      z-index: 2;
+    }
+
+    .carousel-inner {
+      display: flex;
+      width: 400%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+
+    .carousel-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    /* Falling Stars */
+    .star {
+      position: absolute;
+      top: -20px;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: fall linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(100px);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #carouselContainer {
+        width: 90%;
+        height: 180px;
+      }
+
+      #menuBtn {
+        font-size: 14px;
+        padding: 8px 12px;
+      }
+
+      #sidebar {
+        width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menu Button -->
+  <button id="menuBtn">☰ Menu</button>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <h2>Sidebar Menu</h2>
+    <a href="#" class="sidebar-link">Link 1</a>
+    <a href="#" class="sidebar-link">Link 2</a>
+    <a href="#" class="sidebar-link">Link 3</a>
+    <p>Some content goes here...</p>
+  </div>
+
+  <!-- Centered Image Carousel -->
+  <div id="carouselContainer">
+    <div class="carousel-inner" id="carouselInner">
+      <img src="https://via.placeholder.com/800x250/FF5733/FFFFFF?text=Image+1" alt="Image 1">
+      <img src="https://via.placeholder.com/800x250/33FF57/FFFFFF?text=Image+2" alt="Image 2">
+      <img src="https://via.placeholder.com/800x250/3357FF/FFFFFF?text=Image+3" alt="Image 3">
+      <img src="https://via.placeholder.com/800x250/FF33A1/FFFFFF?text=Image+4" alt="Image 4">
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Sidebar toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('visible');
+    });
+
+    // Carousel logic
+    const carouselInner = document.getElementById('carouselInner');
+    const totalImages = carouselInner.children.length;
+    let currentIndex = 0;
+
+    function slideCarousel() {
+      currentIndex = (currentIndex + 1) % totalImages;
+      carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    setInterval(slideCarousel, 3000); // Every 3 seconds
+
+    // Falling stars
+    function createStar() {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 4000);
+    }
+
+    setInterval(createStar, 100);
+  </script>
+
+</body>
+</html>
