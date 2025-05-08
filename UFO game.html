@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SVG UFO Shooter Game</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .star {
+      fill: white;
+      opacity: 0.8;
+      animation: fall var(--duration, 5s) linear infinite;
+      transform-origin: center;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .trail {
+      stroke: white;
+      stroke-width: 1;
+      opacity: 0.4;
+      animation: fall var(--duration, 5s) linear infinite;
+      transform-origin: center;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .plane {
+      fill: #00f;
+      transition: transform 0.1s;
+    }
+
+    .bullet {
+      fill: red;
+    }
+
+    .ufo {
+      fill: #0f0;
+    }
+
+    .boss {
+      fill: #f00;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) translateX(100px) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .plane {
+        width: 40px !important;
+        height: 25px !important;
+      }
+      .ufo, .bullet {
+        r: 12 !important;
+      }
+      .boss {
+        r: 25 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <svg id="sky"></svg>
+
+  <script>
+    const svg = document.getElementById('sky');
+    let planeX = window.innerWidth / 2;
+    let planeY = window.innerHeight - 100;
+    const planeSpeed = 10;
+    let isBoosting = false;
+
+    const bullets = [];
+    const ufos = [];
+    let boss = null;
+    let bossHealth = 5;
+    let plane = null;
+
+    function createStars() {
+      for (let i = 0; i < 80; i++) {
+        const size = Math.random() * 1.5 + 0.5;
+        const startX = Math.random() * window.innerWidth;
+        const duration = (Math.random() * 2 + 2).toFixed(2);
+        const delay = (Math.random() * 5).toFixed(2);
+
+        const star = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        star.setAttribute("r", size);
+        star.setAttribute("cx", startX);
+        star.setAttribute("cy", -10);
+        star.setAttribute("class", "star");
+        star.style.setProperty('--duration', `${duration}s`);
+        star.style.setProperty('--delay', `${delay}s`);
+
+        const trail = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        trail.setAttribute("x1", startX);
+        trail.setAttribute("y1", -10);
+        trail.setAttribute("x2", startX - 10);
+        trail.setAttribute("y2", -20);
+        trail.setAttribute("class", "trail");
+        trail.style.setProperty('--duration', `${duration}s`);
+        trail.style.setProperty('--delay', `${delay}s`);
+
+        svg.appendChild(trail);
+        svg.appendChild(star);
+      }
+    }
+
+    function createPlane() {
+      plane = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      plane.setAttribute("class", "plane");
+      plane.setAttribute("width", 50);
+      plane.setAttribute("height", 30);
+      plane.setAttribute("x", planeX - 25);
+      plane.setAttribute("y", planeY - 15);
+      svg.appendChild(plane);
+    }
+
+    function updatePlane() {
+      plane.setAttribute("x", planeX - 25);
+    }
+
+    function createBullet() {
+      const bullet = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      bullet.setAttribute("class", "bullet");
+      bullet.setAttribute("r", 5);
+      bullet.setAttribute("cx", planeX);
+      bullet.setAttribute("cy", planeY - 20);
+      svg.appendChild(bullet);
+      bullets.push(bullet);
+    }
+
+    function createUFO() {
+      const ufo = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      ufo.setAttribute("class", "ufo");
+      ufo.setAttribute("r", 20);
+      ufo.setAttribute("cx", Math.random() * window.innerWidth);
+      ufo.setAttribute("cy", -20);
+      svg.appendChild(ufo);
+      ufos.push(ufo);
+    }
+
+    function createBoss() {
+      boss = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      boss.setAttribute("class", "boss");
+      boss.setAttribute("r", 40);
+      boss.setAttribute("cx", window.innerWidth / 2);
+      boss.setAttribute("cy", -60);
+      svg.appendChild(boss);
+    }
+
+    function gameLoop() {
+      bullets.forEach((bullet, index) => {
+        const cy = parseFloat(bullet.getAttribute("cy")) - 5;
+        bullet.setAttribute("cy", cy);
+        if (cy < 0) {
+          svg.removeChild(bullet);
+          bullets.splice(index, 1);
+        }
+      });
+
+      ufos.forEach((ufo, index) => {
+        const cy = parseFloat(ufo.getAttribute("cy")) + 2;
+        ufo.setAttribute("cy", cy);
+
+        bullets.forEach((bullet, bIndex) => {
+          if (isColliding(ufo, bullet)) {
+            svg.removeChild(ufo);
+            svg.removeChild(bullet);
+            ufos.splice(index, 1);
+            bullets.splice(bIndex, 1);
+          }
+        });
+
+        if (cy > window.innerHeight) {
+          svg.removeChild(ufo);
+          ufos.splice(index, 1);
+        }
+      });
+
+      if (boss) {
+        const cx = parseFloat(boss.getAttribute("cx")) + (Math.random() > 0.5 ? 2 : -2);
+        const cy = parseFloat(boss.getAttribute("cy")) + 1;
+        boss.setAttribute("cx", Math.max(40, Math.min(window.innerWidth - 40, cx)));
+        boss.setAttribute("cy", cy);
+
+        bullets.forEach((bullet, bIndex) => {
+          if (isColliding(boss, bullet)) {
+            bullets.splice(bIndex, 1);
+            svg.removeChild(bullet);
+            bossHealth--;
+            if (bossHealth <= 0) {
+              svg.removeChild(boss);
+              boss = null;
+              alert("🎉 You defeated the Alien King! You win!");
+              location.reload();
+            }
+          }
+        });
+      }
+
+      updatePlane();
+      requestAnimationFrame(gameLoop);
+    }
+
+    function isColliding(a, b) {
+      const ax = parseFloat(a.getAttribute("cx"));
+      const ay = parseFloat(a.getAttribute("cy"));
+      const ar = parseFloat(a.getAttribute("r")) || 20;
+
+      const bx = parseFloat(b.getAttribute("cx"));
+      const by = parseFloat(b.getAttribute("cy"));
+      const br = parseFloat(b.getAttribute("r")) || 5;
+
+      const dx = ax - bx;
+      const dy = ay - by;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      return dist < ar + br;
+    }
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "ArrowLeft") {
+        planeX -= isBoosting ? planeSpeed * 2 : planeSpeed;
+      }
+      if (e.key === "ArrowRight") {
+        planeX += isBoosting ? planeSpeed * 2 : planeSpeed;
+      }
+      if (e.key === " ") {
+        createBullet();
+      }
+      if (e.key === "Shift") {
+        isBoosting = true;
+      }
+    });
+
+    document.addEventListener("keyup", e => {
+      if (e.key === "Shift") {
+        isBoosting = false;
+      }
+    });
+
+    // Touch Controls
+    document.addEventListener("touchstart", function (e) {
+      const x = e.touches[0].clientX;
+      if (x < window.innerWidth / 3) {
+        planeX -= planeSpeed * 2;
+      } else if (x > window.innerWidth * 2 / 3) {
+        planeX += planeSpeed * 2;
+      } else {
+        createBullet();
+      }
+    });
+
+    createStars();
+    createPlane();
+    createBoss();
+    setInterval(createUFO, 2000);
+    gameLoop();
+  </script>
+</body>
+</html>
