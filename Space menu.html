@@ -102,6 +102,37 @@
     .sidebar-link:hover {
       color: #f39c12;
     }
+
+    /* Centered div */
+    #centeredDiv {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    /* Media Query for Smaller Screens */
+    @media (max-width: 768px) {
+      #centeredDiv {
+        width: 80%;
+        padding: 15px;
+      }
+
+      #menuBtn {
+        font-size: 14px;
+        padding: 8px 12px;
+      }
+
+      #sidebar {
+        width: 200px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -120,6 +151,12 @@
 
   <!-- Sky with Falling Stars -->
   <svg id="sky"></svg>
+
+  <!-- Centered Content Div -->
+  <div id="centeredDiv">
+    <h2>Welcome to Falling Stars!</h2>
+    <p>This is a centered div with some content.</p>
+  </div>
 
   <!-- JavaScript -->
   <script>
