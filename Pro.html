@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Endless Falling Stars with Sidebar</title>
+  <title>Falling Stars with Toggle Sidebar</title>
   <style>
     body, html {
       margin: 0;
@@ -14,22 +14,27 @@
       font-family: sans-serif;
     }
 
-    /* Sidebar Styles */
+    /* Sidebar - fully hidden by default */
     #sidebar {
       position: fixed;
       top: 0;
-      left: -250px;
+      left: -250px; /* Start completely off-screen */
       width: 250px;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.95);
       color: white;
       padding: 20px;
-      transition: left 0.3s ease;
+      transition: left 0.3s ease, opacity 0.3s ease;
       z-index: 10;
+      opacity: 0;
+      pointer-events: none;
     }
 
+    /* Sidebar when visible */
     #sidebar.visible {
       left: 0;
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* Menu Button */
@@ -43,8 +48,10 @@
       padding: 10px 15px;
       font-size: 16px;
       cursor: pointer;
+      border-radius: 4px;
     }
 
+    /* SVG Sky and Stars */
     svg {
       position: absolute;
       top: 0;
@@ -86,15 +93,19 @@
 </head>
 <body>
 
+  <!-- Menu Button -->
   <button id="menuBtn">☰ Menu</button>
 
+  <!-- Sidebar -->
   <div id="sidebar">
-    <h2>Sidebar</h2>
-    <p>This is your sidebar content.</p>
+    <h2>Sidebar Menu</h2>
+    <p>Some content goes here...</p>
   </div>
 
+  <!-- Sky with Falling Stars -->
   <svg id="sky"></svg>
 
+  <!-- JavaScript -->
   <script>
     const svg = document.getElementById('sky');
     const NUM_STARS = 80;
@@ -130,7 +141,7 @@
       createLoopingStar();
     }
 
-    // Toggle Sidebar Logic
+    // Toggle sidebar visibility
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
 
@@ -138,5 +149,6 @@
       sidebar.classList.toggle('visible');
     });
   </script>
+
 </body>
 </html>
