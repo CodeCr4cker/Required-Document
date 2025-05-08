@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Auto Slideshow with Welcome Voice</title>
+  <title>Responsive Slideshow with Voice</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -31,7 +31,6 @@
       color: #333;
     }
 
-    /* Media Query for Mobile */
     @media (max-width: 768px) {
       h1 {
         font-size: 22px;
@@ -39,7 +38,7 @@
     }
   </style>
 </head>
-<body onload="startSlideshow(); speakWelcome();">
+<body onload="startSlideshow(); handleVoiceMobile();">
 
   <h1>Welcome to Our Website</h1>
 
@@ -60,27 +59,36 @@
       slideIndex++;
       if (slideIndex > slides.length) { slideIndex = 1; }
       slides[slideIndex - 1].style.display = "block";
-      setTimeout(startSlideshow, 3000); // Change image every 3 seconds
+      setTimeout(startSlideshow, 3000); // every 3 sec
     }
 
-    // Auto Voice (may be blocked on mobile unless user interacts)
+    // Speak function
     function speakWelcome() {
-      if ('speechSynthesis' in window) {
-        const msg = new SpeechSynthesisUtterance("Welcome to our website, sir");
-        const voices = speechSynthesis.getVoices();
-        msg.voice = voices.find(v => v.name.includes("Female") || v.name.includes("English")) || voices[0];
-        msg.lang = "en-US";
-        msg.pitch = 1;
-        msg.rate = 1;
+      const msg = new SpeechSynthesisUtterance("Welcome to our website, sir");
+      const voices = window.speechSynthesis.getVoices();
+      msg.voice = voices.find(v => v.name.includes("Female") || v.name.includes("English")) || voices[0];
+      msg.lang = "en-US";
+      msg.pitch = 1;
+      msg.rate = 1;
+      speechSynthesis.speak(msg);
+    }
 
-        // Mobile browsers often block autoplay, so delay to allow voices to load
-        setTimeout(() => {
-          try {
-            speechSynthesis.speak(msg);
-          } catch (e) {
-            console.log("Voice autoplay blocked on mobile. Needs user interaction.");
-          }
-        }, 100);
+    // Detect mobile and set first-tap listener
+    function handleVoiceMobile() {
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        // Only run speakWelcome() on first user tap
+        const onFirstTap = () => {
+          speakWelcome();
+          document.removeEventListener('touchstart', onFirstTap);
+          document.removeEventListener('click', onFirstTap); // fallback
+        };
+        document.addEventListener('touchstart', onFirstTap, { once: true });
+        document.addEventListener('click', onFirstTap, { once: true }); // for some devices
+      } else {
+        // Desktop: speak immediately (if allowed)
+        window.speechSynthesis.onvoiceschanged = () => speakWelcome();
       }
     }
   </script>
