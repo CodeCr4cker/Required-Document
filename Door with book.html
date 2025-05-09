@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gateman Guard with Flipbook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #111;
+      font-family: Arial, sans-serif;
+      color: white;
+      overflow-x: hidden;
+    }
+    .door-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .door {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      transition: transform 1s ease;
+      z-index: 1;
+      background-color: red;
+    }
+    .left-door {
+      left: 0;
+    }
+    .right-door {
+      right: 0;
+    }
+    .gateman {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 150px;
+      z-index: 2;
+    }
+    .question-box {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 3;
+    }
+    .question-box input {
+      padding: 8px;
+      font-size: 16px;
+    }
+    .question-box button {
+      padding: 8px 14px;
+      font-size: 16px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    .flipbook {
+      display: none;
+      margin: 20px auto 0 auto;
+      width: 500px;
+      height: 400px;
+      position: relative;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+    .leaf {
+      position: absolute;
+      transform-style: preserve-3d;
+      height: 100%;
+      width: 50%;
+      background-color: #fff;
+      left: 50%;
+      transition: transform 1s;
+      transform-origin: left 0px;
+      cursor: pointer;
+    }
+    .page {
+      transform-style: preserve-3d;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      padding: 1em;
+    }
+    .front { border-radius: 0 1em 1em 0; background: #e0e0e0; }
+    .back { border-radius: 1em 0 0 1em; background: #ccc; transform: rotateY(180deg); }
+  </style>
+</head>
+<body>
+
+<div class="flipbook" id="flipbook">
+  <div class="leaf">
+    <div class="page front"><h2>📖 Welcome</h2><p>The book is now open because you passed the gatekeeper!</p></div>
+    <div class="page back"><h2>Chapter 1</h2><p>This is the beginning of your story.</p></div>
+  </div>
+  <div class="leaf">
+    <div class="page front"><h2>Chapter 2</h2><p>The journey continues...</p></div>
+    <div class="page back"><h2>Chapter 3</h2><p>You have come far.</p></div>
+  </div>
+  <div class="leaf">
+    <div class="page front"><h2>Chapter 4</h2><p>The final chapter is near.</p></div>
+    <div class="page back"><h2>The End</h2><p>Congratulations!</p></div>
+  </div>
+</div>
+
+<div class="door-container" id="doorContainer">
+  <div class="door left-door" id="leftDoor"></div>
+  <div class="door right-door" id="rightDoor"></div>
+
+  <img src="https://via.placeholder.com/150?text=Gateman" class="gateman" id="gateman" alt="Gateman">
+
+  <div class="question-box" id="questionBox">
+    <p id="questionText">Loading...</p>
+    <input type="text" id="userAnswer" placeholder="Your answer">
+    <button onclick="checkAnswer()">Submit</button>
+    <p id="response"></p>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    { q: "What is 5 + 3?", a: "8" },
+    { q: "What color is the sky?", a: "blue" },
+    { q: "Type the word 'magic'", a: "magic" },
+    { q: "What is 10 - 6?", a: "4" }
+  ];
+
+  const questionBox = document.getElementById('questionBox');
+  const gateman = document.getElementById('gateman');
+  const leftDoor = document.getElementById('leftDoor');
+  const rightDoor = document.getElementById('rightDoor');
+  const flipbook = document.getElementById('flipbook');
+  const response = document.getElementById('response');
+  const questionText = document.getElementById('questionText');
+  const leaves = [];
+  let currentPage = 0;
+  let currentAnswer = "";
+
+  function loadRandomQuestion() {
+    const random = questions[Math.floor(Math.random() * questions.length)];
+    questionText.textContent = random.q;
+    currentAnswer = random.a.toLowerCase();
+  }
+
+  function checkAnswer() {
+    const userInput = document.getElementById('userAnswer').value.trim().toLowerCase();
+    if (userInput === currentAnswer) {
+      response.textContent = "Correct! Welcome.";
+      response.style.color = "lime";
+      gateman.style.display = "none";
+      questionBox.style.display = "none";
+      openDoors();
+    } else {
+      response.textContent = "Wrong answer. Try again.";
+      response.style.color = "red";
+    }
+  }
+
+  function openDoors() {
+    leftDoor.style.transform = "translateX(-100%)";
+    rightDoor.style.transform = "translateX(100%)";
+    setTimeout(() => {
+      flipbook.style.display = "block";
+      setupFlipbook();
+    }, 1000);
+  }
+
+  function setupFlipbook() {
+    const book = document.getElementById('flipbook');
+    const leafElems = book.querySelectorAll('.leaf');
+    leafElems.forEach((leaf, index) => {
+      leaves.push(leaf);
+      leaf.addEventListener('click', () => {
+        if (index < currentPage) {
+          currentPage--;
+        } else {
+          currentPage++;
+        }
+        updatePages();
+      });
+    });
+    updatePages();
+  }
+
+  function updatePages() {
+    leaves.forEach((leaf, i) => {
+      let transform = `translateZ(${(i - currentPage) * -1}px)`;
+      if (i < currentPage) {
+        transform += ' rotateY(-180deg)';
+        leaf.style.zIndex = i;
+      } else {
+        leaf.style.zIndex = leaves.length - i;
+      }
+      leaf.style.transform = transform;
+    });
+  }
+
+  loadRandomQuestion();
+</script>
+
+</body>
+</html>
