@@ -10,37 +10,24 @@
       padding: 0;
       height: 100%;
       background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
-      overflow: hidden;
+      overflow-x: hidden;
       font-family: sans-serif;
     }
-.box1{
-  top: 50%;
-      left: 50%;
-}
-    .box2{
-  top: 60%;
-      left: 50%;
-}
-    .box3{
-  top: 70%;
-      left: 50%;
-}
 
- .box4{
-  top: 40%;
-      left: 50%;
-}  
-    .box5{
-  top: 80%;
-      left: 50%;
-} 
-    .box6{
-  top: 30%;
-      left: 50%;
-}
-    #centeredDiv {
+    /* Positioning for boxes */
+    .box1, .box2, .box3, .box4, .box5, .box6 {
       position: absolute;
-      
+      left: 50%;
+    }
+
+    .box1 { top: 50%; }
+    .box2 { top: 60%; }
+    .box3 { top: 70%; }
+    .box4 { top: 40%; }
+    .box5 { top: 80%; }
+    .box6 { top: 30%; }
+
+    .centeredDiv {
       transform: translate(-50%, -50%);
       background: rgba(0, 0, 0, 0.7);
       color: white;
@@ -48,6 +35,7 @@
       border-radius: 10px;
       text-align: center;
       z-index: 2;
+      width: 400px;
     }
 
     /* Sidebar */
@@ -85,13 +73,10 @@
       border-radius: 4px;
     }
 
-    /* Carousel at the top */
+    /* Carousel */
     #carouselContainer {
       position: relative;
       margin: 40px auto 0;
-      left: 0;
-      top: 0;
-      transform: none;
       width: 80%;
       max-width: 800px;
       height: 250px;
@@ -138,15 +123,28 @@
       }
     }
 
+    /* Responsive Layout */
     @media (max-width: 768px) {
+      .box1, .box2, .box3, .box4, .box5, .box6 {
+        position: static;
+        transform: none;
+        left: auto;
+        top: auto;
+        margin: 20px auto;
+        width: 90%;
+      }
+
+      .centeredDiv {
+        width: 100%;
+        max-width: 90%;
+        transform: none;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
       #carouselContainer {
         width: 90%;
         height: 180px;
-      }
-
-      #centeredDiv {
-        width: 80%;
-        padding: 15px;
       }
 
       #menuBtn {
@@ -174,43 +172,42 @@
     <p>Some content goes here...</p>
   </div>
 
-  <!-- Carousel now at the top -->
+  <!-- Carousel -->
   <div id="carouselContainer">
     <div class="carousel-inner" id="carouselInner">
-      <img src="https://via.placeholder.com/800x250/FF5733/FFFFFF?text=Image+1" alt="Image 1">
-      <img src="https://via.placeholder.com/800x250/33FF57/FFFFFF?text=Image+2" alt="Image 2">
-      <img src="https://via.placeholder.com/800x250/3357FF/FFFFFF?text=Image+3" alt="Image 3">
-      <img src="https://via.placeholder.com/800x250/FF33A1/FFFFFF?text=Image+4" alt="Image 4">
+      <img src="https://via.placeholder.com/800x250/FF5733/FFFFFF?text=Image+1" alt="Sunset Landscape">
+      <img src="https://via.placeholder.com/800x250/33FF57/FFFFFF?text=Image+2" alt="Green Forest">
+      <img src="https://via.placeholder.com/800x250/3357FF/FFFFFF?text=Image+3" alt="Blue Ocean">
+      <img src="https://via.placeholder.com/800x250/FF33A1/FFFFFF?text=Image+4" alt="Pink Skies">
     </div>
   </div>
 
-    <div class="box1" id="centeredDiv">
+  <!-- Content Boxes -->
+  <div class="box1 centeredDiv">
     <h2>Welcome to Falling Stars!</h2>
     <p>This is a centered div with some content.</p>
   </div>
-  <div  class="box2" id="centeredDiv">
-    <h2>Welcome to Falling Stars!</h2>
-    <p>This is a centered div with some content.</p>
+  <div class="box2 centeredDiv">
+    <h2>Enjoy the Night Sky</h2>
+    <p>Stars gently falling across the screen.</p>
   </div>
-  <div  class="box3" id="centeredDiv">
-    <h2>Welcome to Falling Stars!</h2>
-    <p>This is a centered div with some content.</p>
+  <div class="box3 centeredDiv">
+    <h2>Customizable Elements</h2>
+    <p>All boxes can hold unique content.</p>
   </div>
-  
-<div  class="box4" id="centeredDiv">
-    <h2>Welcome to Falling Stars!</h2>
-    <p>This is a centered div with some content.</p>
+  <div class="box4 centeredDiv">
+    <h2>Beautiful UI</h2>
+    <p>With a rotating carousel at the top.</p>
+  </div>
+  <div class="box5 centeredDiv">
+    <h2>Responsive Design</h2>
+    <p>Adapts to mobile screens.</p>
+  </div>
+  <div class="box6 centeredDiv">
+    <h2>Explore the Stars</h2>
+    <p>Every star is randomly placed.</p>
   </div>
 
-  <div  class="box5" id="centeredDiv">
-    <h2>Welcome to Falling Stars!</h2>
-    <p>This is a centered div with some content.</p>
-  </div>
-<div  class="box6" id="centeredDiv">
-    <h2>Welcome to Falling Stars!</h2>
-    <p>This is a centered div with some content.</p>
-  </div>
-  
   <script>
     // Sidebar toggle
     const menuBtn = document.getElementById('menuBtn');
@@ -230,7 +227,7 @@
       carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
 
-    setInterval(slideCarousel, 3000); // Every 3 seconds
+    setInterval(slideCarousel, 3000); // Slide every 3 seconds
 
     // Falling stars
     function createStar() {
@@ -242,7 +239,7 @@
       setTimeout(() => star.remove(), 4000);
     }
 
-    setInterval(createStar, 100);
+    setInterval(createStar, 100); // Create a star every 100ms
   </script>
 
 </body>
