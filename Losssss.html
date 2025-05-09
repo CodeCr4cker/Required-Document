@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Falling Stars with Centered Carousel</title>
+  <title>Falling Stars with Top Carousel</title>
   <style>
     body, html {
       margin: 0;
@@ -12,6 +12,42 @@
       background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
       overflow: hidden;
       font-family: sans-serif;
+    }
+.box1{
+  top: 50%;
+      left: 50%;
+}
+    .box2{
+  top: 60%;
+      left: 50%;
+}
+    .box3{
+  top: 70%;
+      left: 50%;
+}
+
+ .box4{
+  top: 40%;
+      left: 50%;
+}  
+    .box5{
+  top: 80%;
+      left: 50%;
+} 
+    .box6{
+  top: 30%;
+      left: 50%;
+}
+    #centeredDiv {
+      position: absolute;
+      
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      z-index: 2;
     }
 
     /* Sidebar */
@@ -49,12 +85,13 @@
       border-radius: 4px;
     }
 
-    /* Carousel container centered */
+    /* Carousel at the top */
     #carouselContainer {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      position: relative;
+      margin: 40px auto 0;
+      left: 0;
+      top: 0;
+      transform: none;
       width: 80%;
       max-width: 800px;
       height: 250px;
@@ -107,6 +144,11 @@
         height: 180px;
       }
 
+      #centeredDiv {
+        width: 80%;
+        padding: 15px;
+      }
+
       #menuBtn {
         font-size: 14px;
         padding: 8px 12px;
@@ -126,13 +168,13 @@
   <!-- Sidebar -->
   <div id="sidebar">
     <h2>Sidebar Menu</h2>
-    <a href="#" class="sidebar-link">Link 1</a>
-    <a href="#" class="sidebar-link">Link 2</a>
+    <a href="#" class="sidebar-link">Link 1</a><br>
+    <a href="#" class="sidebar-link">Link 2</a><br>
     <a href="#" class="sidebar-link">Link 3</a>
     <p>Some content goes here...</p>
   </div>
 
-  <!-- Centered Image Carousel -->
+  <!-- Carousel now at the top -->
   <div id="carouselContainer">
     <div class="carousel-inner" id="carouselInner">
       <img src="https://via.placeholder.com/800x250/FF5733/FFFFFF?text=Image+1" alt="Image 1">
@@ -142,7 +184,33 @@
     </div>
   </div>
 
-  <!-- JavaScript -->
+    <div class="box1" id="centeredDiv">
+    <h2>Welcome to Falling Stars!</h2>
+    <p>This is a centered div with some content.</p>
+  </div>
+  <div  class="box2" id="centeredDiv">
+    <h2>Welcome to Falling Stars!</h2>
+    <p>This is a centered div with some content.</p>
+  </div>
+  <div  class="box3" id="centeredDiv">
+    <h2>Welcome to Falling Stars!</h2>
+    <p>This is a centered div with some content.</p>
+  </div>
+  
+<div  class="box4" id="centeredDiv">
+    <h2>Welcome to Falling Stars!</h2>
+    <p>This is a centered div with some content.</p>
+  </div>
+
+  <div  class="box5" id="centeredDiv">
+    <h2>Welcome to Falling Stars!</h2>
+    <p>This is a centered div with some content.</p>
+  </div>
+<div  class="box6" id="centeredDiv">
+    <h2>Welcome to Falling Stars!</h2>
+    <p>This is a centered div with some content.</p>
+  </div>
+  
   <script>
     // Sidebar toggle
     const menuBtn = document.getElementById('menuBtn');
