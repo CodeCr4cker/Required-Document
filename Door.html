@@ -2,148 +2,203 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gateman Guard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sci-Fi Door With Gateman</title>
   <style>
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: #111;
-      font-family: Arial, sans-serif;
-      color: white;
+      height: 100vh;
+      background: #000;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: 'Orbitron', sans-serif;
+      color: #0ff;
     }
-    .door-container {
+
+    .scene {
       position: relative;
       width: 100%;
       height: 100vh;
-      overflow: hidden;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
+    .door-container {
+      position: relative;
+      width: 400px;
+      height: 300px;
+      background: #111;
+      overflow: hidden;
+      box-shadow: 0 0 20px #0ff;
+      z-index: 1;
+    }
+
     .door {
       position: absolute;
-      top: 0;
       width: 50%;
       height: 100%;
-      transition: transform 1s ease;
-      z-index: 1;
-      background-color: red;
-    }
-    .left-door {
-      left: 0;
-    }
-    .right-door {
-      right: 0;
-    }
-    .gateman {
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 150px;
+      background: linear-gradient(to bottom, #111, #333);
+      box-shadow: inset 0 0 20px #0ff;
+      transition: transform 1.5s ease-in-out;
       z-index: 2;
     }
-    .question-box {
+
+    .left-door {
+      left: 0;
+      border-right: 1px solid #0ff;
+    }
+
+    .right-door {
+      right: 0;
+      border-left: 1px solid #0ff;
+    }
+
+    .open .left-door {
+      transform: translateX(-100%);
+    }
+
+    .open .right-door {
+      transform: translateX(100%);
+    }
+
+    .frame-glow {
       position: absolute;
-      bottom: 20%;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: 0 0 50px #0ff inset;
+      pointer-events: none;
+    }
+
+    .gateman {
+      position: absolute;
+      width: 150px;
+      height: auto;
+      bottom: 20px;
+      z-index: 5;
+      transition: opacity 1s ease;
+    }
+
+    .question {
+      position: absolute;
+      bottom: 100px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 15px;
+      border: 2px solid #0ff;
+      z-index: 6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .question input {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background: #000;
+      border: 1px solid #0ff;
+      color: #0ff;
+    }
+
+    .question button {
+      margin-top: 10px;
+      padding: 5px 15px;
+      background: #0ff;
+      border: none;
+      color: #000;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .light-flash {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #fff 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 1.5s ease;
       z-index: 3;
     }
-    .question-box input {
-      padding: 8px;
-      font-size: 16px;
+
+    .light-on {
+      opacity: 1;
     }
-    .question-box button {
-      padding: 8px 14px;
-      font-size: 16px;
-      margin-left: 8px;
-      cursor: pointer;
-    }
-    .bookbox {
+
+    .hidden {
       display: none;
-      text-align: center;
-      margin-top: 50px;
     }
-    .book {
-      width: 80%;
-      margin: auto;
-      background: #222;
-      padding: 20px;
-      border-radius: 10px;
+
+    .world {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+      background-size: cover;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+      z-index: 0;
+    }
+
+    .world.reveal {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
 
-<div class="door-container" id="doorContainer">
-  <div class="door left-door" id="leftDoor"></div>
-  <div class="door right-door" id="rightDoor"></div>
+<div class="scene">
+  <div class="world" id="world"></div>
 
-  <img src="https://via.placeholder.com/150?text=Gateman" class="gateman" id="gateman" alt="Gateman">
-
-  <div class="question-box" id="questionBox">
-    <p id="questionText">Loading...</p>
-    <input type="text" id="userAnswer" placeholder="Your answer">
-    <button onclick="checkAnswer()">Submit</button>
-    <p id="response"></p>
+  <div class="door-container" id="doorContainer">
+    <div class="door left-door"></div>
+    <div class="door right-door"></div>
+    <div class="frame-glow"></div>
   </div>
-</div>
 
-<div class="bookbox" id="bookBox">
-  <div class="book">
-    <h2>📖 Magical Book</h2>
-    <p>This book appears only when you pass the gatekeeper!</p>
-    <p>“Programming is not just code, it’s poetry.”</p>
+  <img src="gateman.png" alt="Gateman" class="gateman" id="gateman">
+
+  <div class="question" id="questionBox">
+    <label for="nameInput">Gateman: What is your name, traveler?</label>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button onclick="enterName()">Submit</button>
   </div>
+
+  <div class="light-flash" id="lightFlash"></div>
 </div>
 
 <script>
-  const questions = [
-    { q: "What is 5 + 3?", a: "8" },
-    { q: "What color is the sky?", a: "blue" },
-    { q: "Type the word 'magic'", a: "magic" },
-    { q: "What is 10 - 6?", a: "4" }
-  ];
+  function enterName() {
+    const name = document.getElementById('nameInput').value.trim();
+    if (!name) return;
 
-  const questionBox = document.getElementById('questionBox');
-  const gateman = document.getElementById('gateman');
-  const leftDoor = document.getElementById('leftDoor');
-  const rightDoor = document.getElementById('rightDoor');
-  const bookBox = document.getElementById('bookBox');
-  const response = document.getElementById('response');
-  const questionText = document.getElementById('questionText');
+    // Step 1: Hide Gateman and Input
+    document.getElementById('gateman').style.opacity = '0';
+    document.getElementById('questionBox').classList.add('hidden');
 
-  let currentAnswer = "";
-
-  function loadRandomQuestion() {
-    const random = questions[Math.floor(Math.random() * questions.length)];
-    questionText.textContent = random.q;
-    currentAnswer = random.a.toLowerCase();
-  }
-
-  function checkAnswer() {
-    const userInput = document.getElementById('userAnswer').value.trim().toLowerCase();
-    if (userInput === currentAnswer) {
-      response.textContent = "Correct! Welcome.";
-      response.style.color = "lime";
-      gateman.style.display = "none";
-      questionBox.style.display = "none";
-      openDoors();
-    } else {
-      response.textContent = "Wrong answer. Try again.";
-      response.style.color = "red";
-    }
-  }
-
-  function openDoors() {
-    leftDoor.style.transform = "translateX(-100%)";
-    rightDoor.style.transform = "translateX(100%)";
+    // Step 2: Wait 1s, then open door
     setTimeout(() => {
-      bookBox.style.display = "block";
+      document.getElementById('doorContainer').classList.add('open');
+
+      // Step 3: Flash light from inside door
+      setTimeout(() => {
+        document.getElementById('lightFlash').classList.add('light-on');
+
+        // Step 4: Fade door out completely
+        setTimeout(() => {
+          document.getElementById('doorContainer').style.opacity = '0';
+
+          // Step 5: Reveal another world
+          document.getElementById('world').classList.add('reveal');
+
+        }, 1500);
+      }, 1500);
     }, 1000);
   }
-
-  loadRandomQuestion();
 </script>
 
 </body>
