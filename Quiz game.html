@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trivia Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #f9f9f9;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .question-box {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 1rem;
+      background: #ddd;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #4caf50;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .answers button {
+      padding: 0.75rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .loader {
+      border: 6px solid #eee;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .score {
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="progress-container">
+      <div id="progress-bar" class="progress-bar"></div>
+    </div>
+
+    <div id="loader" class="loader" style="display:none;"></div>
+    <div id="question-box" class="question-box" style="display:none;"></div>
+    <div class="score" id="score-display"></div>
+  </div>
+
+  <script>
+    const questionBox = document.getElementById("question-box");
+    const loader = document.getElementById("loader");
+    const progressBar = document.getElementById("progress-bar");
+    const scoreDisplay = document.getElementById("score-display");
+
+    let questions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    const saveHighScore = (newScore) => {
+      const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+      highScores.push(newScore);
+      highScores.sort((a, b) => b - a);
+      highScores.splice(5);
+      localStorage.setItem("highScores", JSON.stringify(highScores));
+    };
+
+    const fetchQuestions = async () => {
+      loader.style.display = "block";
+      questionBox.style.display = "none";
+      const res = await fetch("https://opentdb.com/api.php?amount=5&type=multiple");
+      const data = await res.json();
+      questions = data.results;
+      currentQuestionIndex = 0;
+      score = 0;
+      loader.style.display = "none";
+      showQuestion();
+    };
+
+    const showQuestion = () => {
+      if (currentQuestionIndex >= questions.length) {
+        endGame();
+        return;
+      }
+
+      const q = questions[currentQuestionIndex];
+      const answers = [...q.incorrect_answers, q.correct_answer];
+      answers.sort(() => Math.random() - 0.5); // shuffle
+
+      questionBox.innerHTML = `
+        <h2>${q.question}</h2>
+        <div class="answers">
+          ${answers.map(ans => `<button>${ans}</button>`).join("")}
+        </div>
+      `;
+
+      questionBox.style.display = "block";
+      setProgress((currentQuestionIndex / questions.length) * 100);
+
+      const buttons = questionBox.querySelectorAll("button");
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          if (button.textContent === q.correct_answer) score++;
+          currentQuestionIndex++;
+          showQuestion();
+        });
+      });
+    };
+
+    const setProgress = (percent) => {
+      progressBar.style.width = percent + "%";
+    };
+
+    const endGame = () => {
+      questionBox.innerHTML = `<h2>Quiz Over!</h2><p>Your score: ${score}/${questions.length}</p>`;
+      scoreDisplay.textContent = `Saving your high score...`;
+      saveHighScore(score);
+      setProgress(100);
+
+      const topScores = JSON.parse(localStorage.getItem("highScores")) || [];
+      scoreDisplay.innerHTML = `
+        ✅ Your score: ${score}/${questions.length} <br><br>
+        🏆 Top Scores:<br>
+        <ol>${topScores.map(s => `<li>${s}</li>`).join("")}</ol>
+      `;
+    };
+
+    // Start the game
+    fetchQuestions();
+  </script>
+</body>
+</html>
