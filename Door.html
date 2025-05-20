@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Sci-Fi Door With Gateman</title>
   <style>
     body {
@@ -29,7 +29,6 @@
     }
 
     .door-container {
-      background-image: url('https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif);
       position: relative;
       width: 400px;
       height: 300px;
@@ -37,6 +36,7 @@
       overflow: hidden;
       box-shadow: 0 0 20px #0ff;
       z-index: 1;
+      transition: opacity 1.5s ease;
     }
 
     .door {
@@ -120,7 +120,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, #fff 0%, transparent 60%);
+      background: radial-gradient(circle, #00f 0%, #000 60%);
       opacity: 0;
       transition: opacity 1.5s ease;
       z-index: 3;
@@ -148,60 +148,125 @@
     .world.reveal {
       opacity: 1;
     }
+
+    /* Your custom 4px square */
+    .pixel-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      background: #0ff;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    .world.reveal .pixel-dot {
+      opacity: 1;
+    }
+
+    /* The GIF that appears inside the door when opened */
+    .gif-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://media.giphy.com/media/l0MYu5jXpQKMdY2bG/giphy.gif');
+      background-size: cover;
+      background-position: center;
+      display: none;
+      z-index: 4;
+    }
+
   </style>
 </head>
 <body>
 
-<div class="scene">
-  <div class="world" id="world"></div>
+  <div class="scene">
+    <div class="world" id="world">
+      <!-- 4px square HTML-only div -->
+      <div class="pixel-dot"></div>
+    </div>
 
-  <div class="door-container" id="doorContainer">
-    <!--<img scr="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" class="gif"> -->
-    <div class="door left-door"></div>
-    <div class="door right-door"></div>
-    <div class="frame-glow"></div>
+    <div class="door-container" id="doorContainer">
+      <div class="door left-door"></div>
+      <div class="door right-door"></div>
+      <div class="frame-glow"></div>
+
+      <!-- GIF inside the door container -->
+      <div class="gif-container" id="gifContainer"></div>
+    </div>
+
+    <img src="gateman.png" alt="Gateman" class="gateman" id="gateman">
+
+    <div class="question" id="questionBox">
+      <span id="typewriterText"></span>
+      <input type="text" id="nameInput" placeholder="Enter your name" class="hidden">
+      <button onclick="enterName()" class="hidden">Submit</button>
+    </div>
+
+    <div class="light-flash" id="lightFlash"></div>
   </div>
 
-  <img src="gateman.png" alt="Gateman" class="gateman" id="gateman">
+  <script>
+    // Typewriter effect
+    document.addEventListener("DOMContentLoaded", function () {
+      const text = "Gateman: What is your name, traveler?";
+      const typewriter = document.getElementById("typewriterText");
+      const input = document.getElementById("nameInput");
+      const button = document.querySelector(".question button");
+      let index = 0;
 
-  <div class="question" id="questionBox">
-    <label for="nameInput">Gateman: What is your name, traveler?</label>
-    <input type="text" id="nameInput" placeholder="Enter your name">
-    <button onclick="enterName()">Submit</button>
-  </div>
+      function typeNextChar() {
+        if (index < text.length) {
+          typewriter.textContent += text.charAt(index);
+          index++;
+          setTimeout(typeNextChar, 50);
+        } else {
+          input.classList.remove("hidden");
+          button.classList.remove("hidden");
+        }
+      }
 
-  <div class="light-flash" id="lightFlash"></div>
-</div>
+      typeNextChar();
+    });
 
-<script>
-  function enterName() {
-    const name = document.getElementById('nameInput').value.trim();
-    if (!name) return;
+    // Handle name submission
+    function enterName() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (!name) return;
 
-    // Step 1: Hide Gateman and Input
-    document.getElementById('gateman').style.opacity = '0';
-    document.getElementById('questionBox').classList.add('hidden');
+      document.getElementById('gateman').style.opacity = '0';
+      document.getElementById('questionBox').classList.add('hidden');
 
-    // Step 2: Wait 1s, then open door
-    setTimeout(() => {
+      // Open the door immediately
       document.getElementById('doorContainer').classList.add('open');
 
-      // Step 3: Flash light from inside door
+      // Show GIF inside door
+      const gifContainer = document.getElementById('gifContainer');
+      gifContainer.style.display = 'block';
+
+      // After 6 seconds: flash, fade door, reveal world
       setTimeout(() => {
+        gifContainer.style.display = 'none'; // Hide GIF
+
         document.getElementById('lightFlash').classList.add('light-on');
 
-        // Step 4: Fade door out completely
         setTimeout(() => {
           document.getElementById('doorContainer').style.opacity = '0';
-
-          // Step 5: Reveal another world
           document.getElementById('world').classList.add('reveal');
 
+          setTimeout(() => {
+            document.getElementById('lightFlash').classList.remove('light-on');
+          }, 2000);
+
         }, 1500);
-      }, 1500);
-    }, 1000);
-  }
-</script>
+      }, 6000);
+    }
+  </script>
 
 </body>
 </html>
