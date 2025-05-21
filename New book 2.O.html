@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>3D CSS Flip Book</title>
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      max-height: 100vh;
+      overflow: hidden;
+      background-color: #264653;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .centered {
+      margin: auto;
+      width: max-content;
+    }
+
+    .flipbook {
+      margin: 3em auto;
+      width: 500px;
+      height: 400px;
+      position: relative;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .flipbook .leaf {
+      position: absolute;
+      transform-style: preserve-3d;
+      height: 100%;
+      width: 50%;
+      background-color: #fff;
+      left: 50%;
+      transition: transform 1s;
+      transform: rotate3d(0, 1, 0, 0deg);
+      transform-origin: left 0px;
+      cursor: pointer;
+    }
+
+    .flipbook .leaf .page {
+      transform-style: preserve-3d;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+    }
+
+    .flipbook .leaf .page.front {
+      transform: rotate3d(0, 1, 0, 0deg) translate3d(0, 0, 0.1px);
+    }
+
+    .flipbook .leaf .page.front:not(.external) {
+      box-shadow: inset 5px 0px 5px -5px #0005;
+    }
+
+    .flipbook .leaf .page.back {
+      transform: rotate3d(0, 1, 0, 180deg) translate3d(0, 0, 0.1px);
+    }
+
+    .flipbook .leaf .page.back:not(.external) {
+      box-shadow: inset -5px 0px 5px -5px #0005;
+    }
+
+    .title {
+      text-align: center;
+      width: 100%;
+      padding-top: 2em;
+    }
+
+    .page {
+      padding: 1em;
+    }
+
+    .page.front {
+      border-radius: 0em 1em 1em 0;
+    }
+
+    .page.back {
+      border-radius: 1em 0em 0em 1em;
+    }
+
+    .leaf {
+      background-color: transparent !important;
+    }
+
+    .pageNumber {
+      font-size: 0.95em;
+      position: absolute;
+      bottom: 0.5em;
+    }
+
+    .front .pageNumber {
+      right: 0.75em;
+    }
+
+    .back .pageNumber {
+      left: 0.75em;
+    }
+
+    .contents-row {
+      display: flex;
+      flex-flow: row nowrap;
+    }
+
+    .contents-row .spacer {
+      flex: 1 1;
+      height: 1em;
+      border-bottom: 1px dashed #000;
+    }
+
+    .contents-row .text {
+      flex: 0 0 auto;
+    }
+
+    h1, h2, h3 {
+      font-family: cursive;
+    }
+
+    /* 🔧 Media Query for responsiveness */
+    @media (max-width: 600px) {
+      .flipbook {
+        width: 90vw;
+        height: 60vw;
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    .card {
+      width: var(--card-width);
+      height: var(--card-height);
+      position: relative;
+      perspective: 2500px;
+    }
+    .wrapper {
+      transition: all 0.5s;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    .card:hover .wrapper {
+      transform: perspective(900px) translateY(-5%) rotateX(25deg);
+      box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+    }
+    .cover-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .title {
+      width: 100%;
+      transition: transform 0.5s;
+    }
+    .card:hover .title {
+      transform: translate3d(0%, -50px, 100px);
+    }
+    .character {
+      width: 100%;
+      opacity: 0;
+      transition: all 0.5s;
+      position: absolute;
+      z-index: -1;
+    }
+    .card:hover .character {
+      opacity: 1;
+      transform: translate3d(0%, -30%, 100px);
+    }
+
+
+
+
+
+    
+  </style>
+</head>
+<body>
+  <div class="flipbook centered" id="flipbook">
+    <div class="leaf">
+      <div class="page front external" style="background-color:#e76f51;">
+        <img src="https://picsum.photos/id/1015/300/400" alt="Cover" style="width:100%; height:100%; object-fit:cover;">
+      </div>
+      <div class="page back" style="background-color:#2a9d8f;">
+        <div class="pageNumber">i</div>
+        <div class="card">
+   <!-- <div class="wrapper">
+      <img src="https://ggayane.github.io/css-experiments/cards/dark_rider-cover.jpg" class="cover-image" />
+    </div>
+    <img src="https://ggayane.github.io/css-experiments/cards/dark_rider-title.png" class="title" /> -->
+    <img src="https://ggayane.github.io/css-experiments/cards/dark_rider-character.webp" class="character" />
+        </div>
+     <!--   <img src="https://picsum.photos/id/1011/300/400" alt="" style="width:100%; height:100%; object-fit:cover;">-->
+      </div>
+    </div>
+    <div class="leaf">
+      <div class="page front" style="background-color:#2a9d8f;">
+        <div class="pageNumber">ii</div>
+        <h2>Contents</h2>
+        <div class="contents-row">
+          <div class="text">Cat Ipsum</div>
+          <div class="spacer"></div>
+          <div class="text">1</div>
+        </div>
+        <div class="contents-row">
+          <div class="text">Lorum Ipsum</div>
+          <div class="spacer"></div>
+          <div class="text">3</div>
+        </div>
+      </div>
+      <div class="page back" style="background-color:#e9c46a;">
+        <div class="pageNumber">1</div>
+        <h2>Cat Ipsum</h2>
+        <p>Attack like a vicious monster fight an alligator and win...</p>
+      </div>
+    </div>
+    <div class="leaf">
+      <div class="page front" style="background-color:#e9c46a;">
+        <div class="pageNumber">2</div>
+        I meant to do that now I shall wash myself...
+      </div>
+      <div class="page back" style="background-color:#f4a261;">
+        <div class="pageNumber">3</div>
+        <h2>Lorum Ipsum</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+      </div>
+    </div>
+    <div class="leaf">
+      <div class="page front" style="background-color:#f4a261;">
+        <div class="pageNumber">4</div>
+        <p>Nulla vulputate porta orci eu scelerisque...</p>
+      </div>
+      <div class="page back" style="background-color:#ffe082;">
+        <div class="pageNumber">5</div>
+        <h2>Extra Page</h2>
+        <p>This is an additional page of the flipbook.</p>
+      </div>
+    </div>
+    <div class="leaf">
+      <div class="page front" style="background-color:#ffe082;">
+        <div class="pageNumber">6</div>
+        <p>Here is more sample content in your extended book.</p>
+      </div>
+      <div class="page back" style="background-color:#a5d6a7;">
+        <div class="pageNumber">7</div>
+        <p>Even more pages to demonstrate the flip effect.</p>
+      </div>
+    </div>
+    <div class="leaf">
+      <div class="page front" style="background-color:#a5d6a7;">
+        <div class="pageNumber">8</div>
+        <p>You're now reaching the last few pages.</p>
+      </div>
+      <div class="page back external" style="background-color:#e76f51;">
+        <img src="https://picsum.photos/id/1016/300/400" alt="Back Cover" style="width:100%; height:100%; object-fit:cover;">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    class FlipBook {
+      constructor(bookElem) {
+        this.bookElem = bookElem;
+        this.leaves = Array.from(bookElem.querySelectorAll(".leaf"));
+        this.currentPage = 0;
+        this.turnPage(0);
+        this.setupPageClicks();
+      }
+
+      setPagePosition(page, pos, index) {
+        let transform = `translate3d(0,0,${(pos < 0 ? 1 : -1) * Math.abs(index)}px)`;
+        if (pos < 0) {
+          transform += " rotate3d(0,1,0,-180deg)";
+          page.classList.add("turned");
+        } else {
+          page.classList.remove("turned");
+        }
+        page.style.transform = transform;
+      }
+
+      turnPage(delta) {
+        this.currentPage += delta;
+        if (this.currentPage < 0) this.currentPage = 0;
+        if (this.currentPage > this.leaves.length) this.currentPage = this.leaves.length;
+        this.leaves.forEach((leaf, i) => {
+          this.setPagePosition(leaf, i - this.currentPage, i);
+        });
+      }
+
+      setupPageClicks() {
+        this.leaves.forEach((leaf, i) => {
+          leaf.addEventListener("click", () => {
+            if (i < this.currentPage) {
+              this.turnPage(-1);
+            } else {
+              this.turnPage(1);
+            }
+          });
+        });
+      }
+    }
+
+    new FlipBook(document.getElementById("flipbook"));
+  </script>
+</body>
+</html>
