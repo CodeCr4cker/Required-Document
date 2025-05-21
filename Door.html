@@ -33,13 +33,15 @@
     /* === DOOR STYLING === */
     .door-container {
       position: relative;
-      width: 400px;
-      height: 300px;
+      width: 350px;
+      height: 570px;
       background: #111;
       overflow: hidden;
       box-shadow: 0 0 20px #0ff;
       z-index: 1;
       transition: opacity 1.5s ease;
+      border-top-left-radius:15rem;
+      border-top-right-radius:15rem;
     }
 
     .door {
@@ -55,6 +57,7 @@
     .left-door {
       left: 0;
       border-right: 1px solid #0ff;
+       border-top-left-radius:15rem;
     }
 
     .right-door {
@@ -68,6 +71,7 @@
 
     .open .right-door {
       transform: translateX(100%);
+      border-top-right-radius:15rem;
     }
 
     .frame-glow {
@@ -84,7 +88,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, #00f 0%, #000 60%);
+      background: radial-gradient(circle, black, gray, white);
       opacity: 0;
       transition: opacity 1.5s ease;
       z-index: 3;
@@ -201,8 +205,8 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 350px;
+      height: 570px;
       background: url('https://media.giphy.com/media/l0MYu5jXpQKMdY2bG/giphy.gif') center center / cover no-repeat;
       display: none;
       z-index: 4;
