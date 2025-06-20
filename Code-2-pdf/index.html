@@ -21,7 +21,228 @@
     href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github-dark.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 
-  <link rel="stylesheet" href="styles.css">
+<style>
+  body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0px;
+}
+
+:root {
+  --border-thickness: 1px;
+}
+
+select {
+  padding: 6px;
+  border-radius: 5px;
+}
+
+h1 {
+  margin: 0;
+  padding-bottom: 20px;
+  color: white;
+  background-color: #222831;
+  padding: 20px;
+  margin: -20px -20px 20px -20px;
+}
+
+.options {
+  display: flex;
+  column-gap: 20px;
+  width: 100%;
+  flex-wrap: wrap;
+  row-gap: 14px;
+}
+
+input {
+  padding: 6.5px;
+  border-radius: 5px;
+  border-width: 1px;
+}
+
+.options > * {
+  flex-grow: 2;
+  flex: 1 1 0px;
+}
+
+button {
+  border-width: 0;
+  background-color: #487eb0;
+  color: white;
+  max-width: 100px;
+  font-weight: bold;
+  padding: 6px;
+  min-width: 120px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #40739e;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.95);
+  background-color: #0077b6;
+}
+
+textarea {
+  padding: 10px;
+  margin-top: 20px;
+  resize: none;
+  flex-grow: 1;
+  border-radius: 5px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.hide-from-print {
+  height: calc(100% - 40px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+pre {
+  margin: 0;
+}
+
+#code-container {
+  margin: 0;
+  max-width: 100%;
+}
+
+#code-container .code-line:first-of-type .line-number {
+  padding-top: calc(10px + var(--border-thickness));
+}
+
+#code-container .code-line:last-of-type .line-number {
+  padding-bottom: calc(10px + var(--border-thickness));
+}
+
+#code-container .code-line:first-of-type #code {
+  padding-top: calc(10px + var(--border-thickness));
+  border-top: var(--border-thickness) solid #c9d1d9;
+}
+
+#code-container .code-line:last-of-type #code {
+  padding-bottom: calc(10px + var(--border-thickness));
+  border-bottom: var(--border-thickness) solid #c9d1d9;
+}
+
+#code {
+  font-size: 14px;
+  border: none;
+  border-right: var(--border-thickness) solid #c9d1d9;
+  font-family: 'Fira Code', monospace;
+  white-space: pre-wrap;
+  padding: 0px 11px;
+  flex-grow: 1;
+}
+
+.code-pre {
+  display: inline-block;
+  flex-grow: 1;
+}
+
+#code-div {
+  background-color: #c9d1d9;
+  width: auto;
+  flex: 1;
+  display: inline-block;
+}
+
+.code-line {
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  display: flex;
+}
+
+.line-number {
+  padding: 0px 11px;
+  user-select: none;
+  background-color: #454545;
+  color: white;
+  white-space: pre;
+}
+
+#print-area {
+  padding: 0;
+  padding-top: 20px;
+  display: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media print {
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .line-number {
+    user-select: none;
+  }
+
+  #document-title {
+    margin-bottom: 20px;
+  }
+
+  #print-area {
+    display: block;
+  }
+
+  .hide-from-print {
+    display: none;
+  }
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.github-icon {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  vertical-align: middle;
+  float: right;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+
+
+
+
+
+                    
+</style>
 </head>
 
 <body>
@@ -87,7 +308,118 @@
       </div>
     </div>
   </div>
-  <script src="index.js"></script>
+  <script>
+    const printBtn = document.getElementById('print');
+const codeTextArea = document.getElementsByTagName('textarea')[0];
+const code = document.getElementById('code');
+const documentNameInput = document.getElementById('document-name-input');
+const languageSelector = document.getElementById('languages');
+const codeLines = document.getElementById('line-nums');
+const themeStylesheet = document.getElementById('theme-style');
+const themeSelector = document.getElementById('themes');
+const codeContainer = document.getElementById('code-container');
+let selectedLanguage = localStorage.getItem('language') || 'javascript';
+let selectedTheme = localStorage.getItem('theme') || 'github-dark';
+let codeText = localStorage.getItem('code') || 'console.log("Hello World")';
+
+// Set up the initial state
+themeStylesheet.setAttribute('href', getStylesheet(selectedTheme));
+themeSelector.value = selectedTheme;
+code.classList.add('hljs', `language-${selectedLanguage}`);
+escaped = escapeHtml(codeText);
+code.innerHTML = escaped;
+codeTextArea.value = codeText;
+languageSelector.value = selectedLanguage;
+hljs.configure({
+    languages: ['java', 'javascript', 'html', 'typescript', 'cpp']
+});
+
+updateCode();
+
+// Attach event listeners
+printBtn.addEventListener('click', () => {
+    updateCode();
+    let optGroup = themeSelector.options[themeSelector.selectedIndex].parentNode;
+    const lineNumbers = document.querySelectorAll('.line-number');
+    const root = document.documentElement;
+
+    if (optGroup.label === 'Dark') {
+        root.style.setProperty('--border-thickness', '0px');
+        for (let i = 0; i < lineNumbers.length; i++) {
+            lineNumbers[i].style.backgroundColor = '#353b48';
+            lineNumbers[i].style.color = '#dfe6e9';
+        }
+    } else {
+        root.style.setProperty('--border-thickness', '1px');
+        for (let i = 0; i < lineNumbers.length; i++) {
+            lineNumbers[i].style.backgroundColor = '#dcdde1';
+            lineNumbers[i].style.color = '#2d3436';
+        }
+    }
+    document.title = documentNameInput.value || 'Code';
+    window.print();
+    document.title = 'Convert Code to PDF Online: Free Tool for Programming Languages';
+});
+
+codeTextArea.addEventListener('input', () => {
+    codeText = codeTextArea.value;
+    localStorage.setItem('code', codeText);
+    code.innerHTML = escapeHtml(codeText);
+});
+
+languageSelector.addEventListener('change', () => {
+    code.classList.remove(`language-${selectedLanguage}`);
+    selectedLanguage = languageSelector.value;
+    localStorage.setItem('language', selectedLanguage);
+    code.classList.add(`language-${selectedLanguage}`);
+});
+
+themeSelector.addEventListener('change', () => {
+    selectedTheme = themeSelector.value;
+    themeStylesheet.href = getStylesheet(selectedTheme);
+    localStorage.setItem('theme', selectedTheme);
+});
+
+// Helper functions
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function getStylesheet(style) {
+    return `//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/${style}.min.css`;
+}
+
+function createCodeLine(lineNumber, lineContent) {
+    lineContent = lineContent || ' ';
+    const code = `<code id="code" class="hljs language-${selectedLanguage}">${lineContent}</code>`;
+    return `<div class="code-line"><span class="line-number">${lineNumber}</span><pre class="code-pre">${code}</pre></div>`;
+}
+
+function updateCode() {
+    const lines = codeTextArea.value.split('\n');
+    const numLines = lines.length;
+    let formattedCode = '';
+
+    for (let i = 0; i < lines.length; i++) {
+        const lineNumber = (i + 1).toString().padStart(Math.floor(Math.log10(numLines)) + 1, ' ');
+        const lineContent = escapeHtml(lines[i]);
+        const codeLine = createCodeLine(lineNumber, lineContent);
+        formattedCode += codeLine;
+    }
+
+    codeContainer.innerHTML = formattedCode;
+    hljs.highlightAll();
+}
+
+
+
+
+  </script>
 </body>
 
 </html>
