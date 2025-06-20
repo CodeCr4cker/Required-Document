@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Convert Code to PDF Online: Free Tool for Programming Languages</title>
+  <link rel="icon" type="image/x-icon" href="/images/printer.png" />
+  <meta name="description"
+    content="Convert code to PDF online for free with our tool that supports multiple programming languages and syntax highlighting themes. Get started now!" />
+  <meta name="keywords"
+    content="code to pdf, convert code to pdf, code converter, programming language converter, syntax highlighting, online converter, Convert code to pdf By Divyanshu Pandey" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" id="theme-style"
+    href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github-dark.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0px;
+    }
+
+    h1 {
+      margin: 0;
+      padding-bottom: 20px;
+      color: white;
+      background-color: #222831;
+      padding: 20px;
+      margin: -20px -20px 20px -20px;
+    }
+
+    .options {
+      display: flex;
+      column-gap: 20px;
+      flex-wrap: wrap;
+      row-gap: 14px;
+    }
+
+    .options>div {
+      flex-grow: 1;
+      min-width: 150px;
+    }
+
+    input,
+    select,
+    button {
+      padding: 6.5px;
+      border-radius: 5px;
+      border-width: 1px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #487eb0;
+      color: white;
+      border: none;
+      font-weight: bold;
+      transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #40739e;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: scale(0.95);
+      background-color: #0077b6;
+    }
+
+    textarea {
+      padding: 10px;
+      margin-top: 20px;
+      resize: none;
+      flex-grow: 1;
+      border-radius: 5px;
+      width: 100%;
+      height: 300px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    .hide-from-print {
+      height: calc(100% - 40px);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    pre {
+      margin: 0;
+    }
+
+    #code-container {
+      margin: 0;
+      max-width: 100%;
+    }
+
+    .code-line {
+      display: flex;
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+    }
+
+    .line-number {
+      padding: 0px 11px;
+      user-select: none;
+      background-color: #454545;
+      color: white;
+      white-space: pre;
+    }
+
+    .code-pre {
+      flex-grow: 1;
+    }
+
+    #print-area {
+      display: none;
+      padding-top: 20px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .github-icon {
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+      float: right;
+    }
+
+    @media print {
+      body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .hide-from-print {
+        display: none;
+      }
+
+      #print-area {
+        display: block;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .options {
+        flex-direction: column;
+      }
+
+      .github-icon {
+        float: none;
+        display: block;
+        margin: 10px auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hide-from-print">
+    <h1>
+      Code-2-PDF
+      <a href="https://github.com/CodeCr4cker/Code-2-pdf" target="_blank">
+        <img src="images/github-mark-white.png" alt="GitHub Icon" class="github-icon" />
+      </a>
+    </h1>
+    <div class="options">
+      <div><input id="document-name-input" type="text" placeholder="File name" aria-label="File name" /></div>
+      <div>
+        <label for="languages">Language</label><br />
+        <select id="languages" aria-label="Language">
+          <option value="javascript">JavaScript</option>
+          <option value="typescript">TypeScript</option>
+          <option value="json">JSON</option>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="php">PHP</option>
+          <option value="python">Python</option>
+          <option value="r">R</option>
+          <option value="c">C</option>
+          <option value="cpp">C++</option>
+          <option value="cs">C#</option>
+          <option value="rust">Rust</option>
+          <option value="go">Go</option>
+          <option value="java">Java</option>
+          <option value="kotlin">Kotlin</option>
+          <option value="swift">Swift</option>
+          <option value="armasm">ARM Assembly</option>
+          <option value="x86asm">x86 Assembly</option>
+        </select>
+      </div>
+      <div>
+        <label for="themes">Theme</label><br />
+        <select id="themes" aria-label="Theme">
+          <optgroup label="Dark">
+            <option value="atom-one-dark">Atom One Dark</option>
+            <option value="vs2015">VS Code</option>
+            <option value="nord">Nord</option>
+            <option value="monokai">Monokai</option>
+            <option value="github-dark">GitHub Dark</option>
+            <option value="github-dark-dimmed">GitHub Dark Dimmed</option>
+          </optgroup>
+          <optgroup label="Light">
+            <option value="atom-one-light">Atom One Light</option>
+            <option value="default">Default</option>
+            <option value="xcode">Xcode</option>
+            <option value="intellij-light">IntelliJ Light</option>
+            <option value="github">GitHub Light</option>
+          </optgroup>
+        </select>
+      </div>
+      <div>
+        <button id="print" aria-label="Print Code">Print</button>
+        <button id="download" aria-label="Download PDF">Download PDF</button>
+      </div>
+    </div>
+    <textarea spellcheck="false" placeholder="Enter code ..."></textarea>
+  </div>
+
+  <div id="print-area">
+    <div id="code-container"></div>
+  </div>
+
+  <script>
+    const printBtn = document.getElementById('print');
+    const downloadBtn = document.getElementById('download');
+    const codeTextArea = document.querySelector('textarea');
+    const documentNameInput = document.getElementById('document-name-input');
+    const languageSelector = document.getElementById('languages');
+    const themeSelector = document.getElementById('themes');
+    const themeStylesheet = document.getElementById('theme-style');
+    const codeContainer = document.getElementById('code-container');
+
+    let selectedLanguage = localStorage.getItem('language') || 'javascript';
+    let selectedTheme = localStorage.getItem('theme') || 'github-dark';
+    let codeText = localStorage.getItem('code') || 'console.log("Hello World");';
+
+    themeStylesheet.href = getStylesheet(selectedTheme);
+    themeSelector.value = selectedTheme;
+    languageSelector.value = selectedLanguage;
+    codeTextArea.value = codeText;
+
+    hljs.configure({ languages: ['java', 'javascript', 'html', 'typescript', 'cpp'] });
+    updateCode();
+
+    codeTextArea.addEventListener('input', () => {
+      codeText = codeTextArea.value;
+      localStorage.setItem('code', codeText);
+      updateCode();
+    });
+
+    codeTextArea.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = codeTextArea.selectionStart;
+        const end = codeTextArea.selectionEnd;
+        codeTextArea.value = codeTextArea.value.substring(0, start) + '\t' + codeTextArea.value.substring(end);
+        codeTextArea.selectionStart = codeTextArea.selectionEnd = start + 1;
+        codeTextArea.dispatchEvent(new Event('input'));
+      }
+    });
+
+    languageSelector.addEventListener('change', () => {
+      selectedLanguage = languageSelector.value;
+      localStorage.setItem('language', selectedLanguage);
+      updateCode();
+    });
+
+    themeSelector.addEventListener('change', () => {
+      selectedTheme = themeSelector.value;
+      themeStylesheet.href = getStylesheet(selectedTheme);
+      localStorage.setItem('theme', selectedTheme);
+    });
+
+    printBtn.addEventListener('click', () => {
+      updateCode();
+      setLineNumberStyles();
+      document.title = documentNameInput.value || 'Code';
+      window.print();
+      document.title = 'Convert Code to PDF Online: Free Tool for Programming Languages';
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      updateCode();
+      setLineNumberStyles();
+      const element = document.getElementById('print-area');
+      const filename = (documentNameInput.value || 'code') + '.pdf';
+      html2pdf().from(element).save(filename);
+    });
+
+    function getStylesheet(theme) {
+      return `//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/${theme}.min.css`;
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function createCodeLine(lineNumber, lineContent = '') {
+      return `<div class="code-line">
+                <span class="line-number">${lineNumber}</span>
+                <pre class="code-pre"><code class="hljs language-${selectedLanguage}">${lineContent}</code></pre>
+              </div>`;
+    }
+
+    function updateCode() {
+      const lines = codeTextArea.value.split('\n');
+      const width = Math.floor(Math.log10(lines.length)) + 1;
+      const formattedCode = lines.map((line, i) =>
+        createCodeLine((i + 1).toString().padStart(width, ' '), escapeHtml(line))
+      ).join('');
+      codeContainer.innerHTML = formattedCode;
+      hljs.highlightAll();
+    }
+
+    function setLineNumberStyles() {
+      const lineNumbers = document.querySelectorAll('.line-number');
+      const optGroup = themeSelector.options[themeSelector.selectedIndex].parentNode;
+      const root = document.documentElement;
+      if (optGroup.label === 'Dark') {
+        root.style.setProperty('--border-thickness', '0px');
+        lineNumbers.forEach(el => {
+          el.style.backgroundColor = '#353b48';
+          el.style.color = '#dfe6e9';
+        });
+      } else {
+        root.style.setProperty('--border-thickness', '1px');
+        lineNumbers.forEach(el => {
+          el.style.backgroundColor = '#dcdde1';
+          el.style.color = '#2d3436';
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>
