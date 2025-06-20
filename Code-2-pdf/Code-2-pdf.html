@@ -10,160 +10,61 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" id="theme-style"
-    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github-dark.min.css" />
+  <link rel="stylesheet" id="theme-style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github-dark.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
   <style>
-    body {
+    body, html {
       font-family: 'Roboto', sans-serif;
       margin: 0;
+      padding: 0;
+      height: 100%;
     }
 
-    :root {
-      --border-thickness: 1px;
-    }
-
-    select, input {
-      padding: 6px;
-      border-radius: 5px;
-    }
-
-    h1 {
-      margin: 0;
-      padding: 20px;
-      color: white;
-      background-color: #222831;
-      margin-bottom: 20px;
+    .hide-from-print {
+      padding: 10px;
     }
 
     .options {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px 20px;
-      width: 100%;
+      gap: 10px;
     }
 
-    input {
-      border-width: 1px;
-    }
-
-    .options > * {
-      flex: 1 1 0;
-    }
-
-    button {
-      background-color: #487eb0;
+    h1 {
+      margin: 0;
+      padding: 10px;
       color: white;
-      font-weight: bold;
-      padding: 6px;
-      min-width: 120px;
-      border: none;
-      border-radius: 5px;
-      transition: background-color 0.2s, transform 0.2s;
-    }
-
-    button:hover {
-      background-color: #40739e;
-      cursor: pointer;
-    }
-
-    button:active {
-      transform: scale(0.95);
-      background-color: #0077b6;
+      background-color: #222831;
     }
 
     textarea {
-      padding: 10px;
-      margin-top: 20px;
+      padding: 5px;
+      margin-top: 10px;
       resize: none;
-      flex-grow: 1;
-      border-radius: 5px;
-    }
-
-    html, body {
-      height: 100%;
-    }
-
-    .hide-from-print {
-      height: calc(100% - 40px);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    pre, .code-pre {
-      margin: 0;
-    }
-
-    #code-container {
-      margin: 0;
-      max-width: 100%;
-    }
-
-    #code-container .code-line:first-of-type code {
-      padding-top: calc(10px + var(--border-thickness));
-      border-top: var(--border-thickness) solid #c9d1d9;
-    }
-
-    #code-container .code-line:last-of-type code {
-      padding-bottom: calc(10px + var(--border-thickness));
-      border-bottom: var(--border-thickness) solid #c9d1d9;
-    }
-
-    code {
-      font-size: 14px;
-      font-family: 'Fira Code', monospace;
-      white-space: pre-wrap;
-      padding: 0px 11px;
-      border-right: var(--border-thickness) solid #c9d1d9;
-      line-height: 1;
-      display: block;
-    }
-
-    .code-line {
-      display: flex;
-      font-family: 'Fira Code', monospace;
-      font-size: 14px;
-      line-height: 1;
-    }
-
-    .line-number {
-      padding: 0 11px;
-      background-color: #454545;
-      color: white;
-      user-select: none;
-      white-space: pre;
+      width: 100%;
+      height: 200px;
     }
 
     #print-area {
-      padding-top: 20px;
+      padding: 0;
+      margin: 0;
       display: none;
+    }
+
+    .pdf-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 5px 0;
     }
 
     .pdf-footer {
       width: 100%;
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
-      color: #333;
-      padding: 10px 20px;
+      font-size: 10px;
+      padding: 5px 10px;
       border-top: 1px solid #ccc;
-      margin-top: 20px;
-    }
-
-    .github-icon {
-      width: 40px;
-      height: 40px;
-      margin-left: 10px;
-      vertical-align: middle;
-      float: right;
-    }
-
-    .pdf-title {
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
     }
 
     .watermark {
@@ -171,17 +72,39 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 60px;
+      font-size: 40px;
       color: rgba(0, 0, 0, 0.05);
       z-index: -1;
       user-select: none;
-      pointer-events: none;
+    }
+
+    .code-line {
+      display: flex;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .line-number {
+      padding: 0 8px;
+      background-color: #454545;
+      color: white;
+      white-space: pre;
+      user-select: none;
+    }
+
+    code {
+      padding: 0 8px;
+      display: block;
+      border-right: 1px solid #c9d1d9;
+      white-space: pre-wrap;
+      line-height: 1;
     }
 
     @media print {
       body {
-        print-color-adjust: exact;
         -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
       .hide-from-print {
@@ -190,19 +113,14 @@
 
       #print-area {
         display: block;
-      }
-
-      .pdf-title {
-        display: block;
+        background-color: inherit;
       }
 
       .pdf-footer {
         position: fixed;
         bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: white;
-        color: black;
+        background-color: inherit;
+        color: inherit;
       }
     }
   </style>
@@ -210,14 +128,9 @@
 
 <body>
   <div class="hide-from-print">
-    <h1>
-      Code-2-PDF
-      <a href="https://github.com/CodeCr4cker/Code-2-pdf" target="_blank">
-        <img src="images/github-mark-white.png" alt="GitHub" class="github-icon" />
-      </a>
-    </h1>
+    <h1>Code-2-PDF</h1>
     <div class="options">
-      <input id="document-name-input" type="text" placeholder="Enter Title Here (will show in PDF)" />
+      <input id="document-name-input" type="text" placeholder="Enter Title" />
       <select id="languages">
         <option value="javascript">JavaScript</option>
         <option value="html">HTML</option>
@@ -227,17 +140,17 @@
       </select>
       <select id="themes">
         <optgroup label="Dark">
-          <option value="github-dark" selected>Github Dark</option>
+          <option value="github-dark" selected>GitHub Dark</option>
           <option value="monokai">Monokai</option>
         </optgroup>
         <optgroup label="Light">
-          <option value="github">Github Light</option>
+          <option value="github">GitHub Light</option>
           <option value="xcode">Xcode</option>
         </optgroup>
       </select>
       <button id="print">Print</button>
     </div>
-    <textarea spellcheck="false" placeholder="Enter your code here..."></textarea>
+    <textarea spellcheck="false" placeholder="Enter code..."></textarea>
   </div>
 
   <div id="print-area">
@@ -274,8 +187,8 @@
       return text.replace(/&/g, "&amp;")
                  .replace(/</g, "&lt;")
                  .replace(/>/g, "&gt;")
-                 .replace(/\"/g, "&quot;")
-                 .replace(/\'/g, "&#039;");
+                 .replace(/"/g, "&quot;")
+                 .replace(/'/g, "&#039;");
     }
 
     function getStylesheet(style) {
