@@ -16,55 +16,50 @@
   <style>
     body {
       font-family: 'Roboto', sans-serif;
-      margin: 0px;
+      margin: 0;
     }
 
     :root {
       --border-thickness: 1px;
     }
 
-    select,
-    input {
+    select, input {
       padding: 6px;
       border-radius: 5px;
     }
 
     h1 {
       margin: 0;
-      padding-bottom: 20px;
+      padding: 20px;
       color: white;
       background-color: #222831;
-      padding: 20px;
-      margin: -20px -20px 20px -20px;
+      margin-bottom: 20px;
     }
 
     .options {
       display: flex;
-      column-gap: 20px;
-      width: 100%;
       flex-wrap: wrap;
-      row-gap: 14px;
+      gap: 14px 20px;
+      width: 100%;
     }
 
     input {
       border-width: 1px;
     }
 
-    .options>* {
-      flex-grow: 2;
-      flex: 1 1 0px;
+    .options > * {
+      flex: 1 1 0;
     }
 
     button {
-      border-width: 0;
       background-color: #487eb0;
       color: white;
-      max-width: 100px;
       font-weight: bold;
       padding: 6px;
       min-width: 120px;
+      border: none;
       border-radius: 5px;
-      transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+      transition: background-color 0.2s, transform 0.2s;
     }
 
     button:hover {
@@ -85,8 +80,7 @@
       border-radius: 5px;
     }
 
-    html,
-    body {
+    html, body {
       height: 100%;
     }
 
@@ -97,21 +91,13 @@
       flex-direction: column;
     }
 
-    pre {
+    pre, .code-pre {
       margin: 0;
     }
 
     #code-container {
       margin: 0;
       max-width: 100%;
-    }
-
-    #code-container .code-line:first-of-type .line-number {
-      padding-top: calc(10px + var(--border-thickness));
-    }
-
-    #code-container .code-line:last-of-type .line-number {
-      padding-bottom: calc(10px + var(--border-thickness));
     }
 
     #code-container .code-line:first-of-type code {
@@ -126,78 +112,32 @@
 
     code {
       font-size: 14px;
-      border: none;
-      border-right: var(--border-thickness) solid #c9d1d9;
       font-family: 'Fira Code', monospace;
       white-space: pre-wrap;
       padding: 0px 11px;
-      flex-grow: 1;
-    }
-
-    .code-pre {
-      display: inline-block;
-      flex-grow: 1;
+      border-right: var(--border-thickness) solid #c9d1d9;
+      line-height: 1;
+      display: block;
     }
 
     .code-line {
+      display: flex;
       font-family: 'Fira Code', monospace;
       font-size: 14px;
-      display: flex;
+      line-height: 1;
     }
 
     .line-number {
-      padding: 0px 11px;
-      user-select: none;
+      padding: 0 11px;
       background-color: #454545;
       color: white;
+      user-select: none;
       white-space: pre;
     }
 
     #print-area {
-      padding: 0;
       padding-top: 20px;
       display: none;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .github-icon {
-      width: 40px;
-      height: 40px;
-      margin-left: 10px;
-      vertical-align: middle;
-      float: right;
-    }
-
-    @media print {
-      body {
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-      }
-
-      .line-number {
-        user-select: none;
-      }
-
-      #print-area {
-        display: block;
-      }
-
-      .hide-from-print {
-        display: none;
-      }
-
-      .pdf-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: white;
-        color: black;
-      }
     }
 
     .pdf-footer {
@@ -209,6 +149,61 @@
       padding: 10px 20px;
       border-top: 1px solid #ccc;
       margin-top: 20px;
+    }
+
+    .github-icon {
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+      vertical-align: middle;
+      float: right;
+    }
+
+    .pdf-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 60px;
+      color: rgba(0, 0, 0, 0.05);
+      z-index: -1;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @media print {
+      body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .hide-from-print {
+        display: none;
+      }
+
+      #print-area {
+        display: block;
+      }
+
+      .pdf-title {
+        display: block;
+      }
+
+      .pdf-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        color: black;
+      }
     }
   </style>
 </head>
@@ -222,7 +217,7 @@
       </a>
     </h1>
     <div class="options">
-      <input id="document-name-input" type="text" placeholder="File name" />
+      <input id="document-name-input" type="text" placeholder="Enter Title Here (will show in PDF)" />
       <select id="languages">
         <option value="javascript">JavaScript</option>
         <option value="html">HTML</option>
@@ -242,10 +237,12 @@
       </select>
       <button id="print">Print</button>
     </div>
-    <textarea spellcheck="false" placeholder="Enter code ..."></textarea>
+    <textarea spellcheck="false" placeholder="Enter your code here..."></textarea>
   </div>
 
   <div id="print-area">
+    <div class="watermark">CodeCr4cker</div>
+    <div class="pdf-title" id="pdf-title"></div>
     <div id="code-container"></div>
     <div class="pdf-footer">
       <span class="footer-left">Developer: Divyanshu Pandey</span>
@@ -261,6 +258,7 @@
     const themeSelector = document.getElementById('themes');
     const themeStylesheet = document.getElementById('theme-style');
     const codeContainer = document.getElementById('code-container');
+
     let selectedLanguage = localStorage.getItem('language') || 'javascript';
     let selectedTheme = localStorage.getItem('theme') || 'github-dark';
     let codeText = localStorage.getItem('code') || 'console.log("Hello World!")';
@@ -269,11 +267,15 @@
     themeSelector.value = selectedTheme;
     languageSelector.value = selectedLanguage;
     codeTextArea.value = codeText;
+
     hljs.configure({ languages: ['javascript', 'html', 'css', 'python', 'cpp'] });
 
     function escapeHtml(text) {
-      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      return text.replace(/&/g, "&amp;")
+                 .replace(/</g, "&lt;")
+                 .replace(/>/g, "&gt;")
+                 .replace(/\"/g, "&quot;")
+                 .replace(/\'/g, "&#039;");
     }
 
     function getStylesheet(style) {
@@ -281,51 +283,34 @@
     }
 
     function createCodeLine(lineNumber, lineContent) {
-      const code = `<code class="hljs language-${selectedLanguage}">${lineContent}</code>`;
-      return `<div class="code-line"><span class="line-number">${lineNumber}</span><pre class="code-pre">${code}</pre></div>`;
+      return `<div class="code-line"><span class="line-number">${lineNumber}</span><pre class="code-pre"><code class="hljs language-${selectedLanguage}">${lineContent}</code></pre></div>`;
     }
 
     function updateCode() {
       const lines = codeTextArea.value.split('\n');
-      let formattedCode = '';
+      let output = '';
+      const pad = Math.floor(Math.log10(lines.length)) + 1;
       for (let i = 0; i < lines.length; i++) {
-        const num = (i + 1).toString().padStart(2, ' ');
-        formattedCode += createCodeLine(num, escapeHtml(lines[i]));
+        const number = (i + 1).toString().padStart(pad, ' ');
+        const content = escapeHtml(lines[i]);
+        output += createCodeLine(number, content);
       }
-      codeContainer.innerHTML = formattedCode;
+      codeContainer.innerHTML = output;
       hljs.highlightAll();
     }
 
     printBtn.addEventListener('click', () => {
       updateCode();
-      const lineNumbers = document.querySelectorAll('.line-number');
-      const root = document.documentElement;
-      const optGroup = themeSelector.options[themeSelector.selectedIndex].parentNode;
-
-      if (optGroup.label === 'Dark') {
-        root.style.setProperty('--border-thickness', '0px');
-        lineNumbers.forEach(el => {
-          el.style.backgroundColor = '#353b48';
-          el.style.color = '#dfe6e9';
-        });
-      } else {
-        root.style.setProperty('--border-thickness', '1px');
-        lineNumbers.forEach(el => {
-          el.style.backgroundColor = '#dcdde1';
-          el.style.color = '#2d3436';
-        });
-      }
-
       const now = new Date();
       document.getElementById('datetime').innerText = now.toLocaleString();
+      document.getElementById('pdf-title').innerText = documentNameInput.value || 'Code';
       document.title = documentNameInput.value || 'Code';
       window.print();
       document.title = 'Convert Code to PDF Online';
     });
 
     codeTextArea.addEventListener('input', () => {
-      codeText = codeTextArea.value;
-      localStorage.setItem('code', codeText);
+      localStorage.setItem('code', codeTextArea.value);
     });
 
     languageSelector.addEventListener('change', () => {
