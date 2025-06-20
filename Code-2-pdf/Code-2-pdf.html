@@ -1,62 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Convert Code to PDF Online</title>
+  <title>Convert Code to PDF Online: Free Tool for Programming Languages</title>
 
-  <meta name="description"
-    content="Convert code to PDF online for free with syntax highlighting and themes." />
-  <meta name="keywords"
-    content="code to pdf, convert code, code pdf generator, syntax highlighting" />
+  <!-- Meta -->
+  <meta name="description" content="Convert code to PDF online with syntax highlighting. Created by Divyanshu Pandey.">
+  <meta name="keywords" content="code to pdf, convert code to pdf, code formatter, syntax highlighter">
 
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github-dark.min.css"
-    id="theme-style" />
+  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <!-- Highlight.js CSS & Script -->
+  <link rel="stylesheet" id="theme-style" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github-dark.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+
+  <!-- PDF Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
+  <!-- Styles -->
   <style>
     body {
       font-family: 'Roboto', sans-serif;
       margin: 0;
     }
 
+    :root {
+      --border-thickness: 1px;
+    }
+
     h1 {
-      margin: 0;
-      padding: 20px;
       background-color: #222831;
       color: white;
+      margin: 0 -20px 20px;
+      padding: 20px;
     }
 
     .options {
       display: flex;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 12px;
-      padding: 20px;
+      padding: 0 20px;
     }
 
-    .options>* {
-      flex: 1;
-      min-width: 140px;
-    }
-
-    input,
-    select,
-    button {
-      padding: 8px;
+    select, input, button {
+      padding: 6.5px;
       border-radius: 5px;
-      font-size: 1rem;
+      border: 1px solid #ccc;
     }
 
     button {
       background-color: #487eb0;
       color: white;
-      border: none;
       font-weight: bold;
+      border: none;
       cursor: pointer;
+      min-width: 120px;
     }
 
     button:hover {
@@ -64,31 +65,16 @@
     }
 
     textarea {
-      padding: 12px;
+      width: 100%;
+      height: 200px;
       margin: 20px;
-      width: calc(100% - 40px);
-      height: 300px;
-      font-family: 'Fira Code', monospace;
-      font-size: 14px;
+      padding: 10px;
       border-radius: 5px;
-      resize: none;
-    }
-
-    .code-line {
-      display: flex;
       font-family: 'Fira Code', monospace;
-      font-size: 14px;
     }
 
-    .line-number {
-      padding: 0 12px;
-      background-color: #454545;
-      color: white;
-      user-select: none;
-    }
-
-    .code-pre {
-      flex-grow: 1;
+    .hide-from-print {
+      padding: 20px;
     }
 
     #print-area {
@@ -96,133 +82,106 @@
       padding: 20px;
     }
 
+    #code-container {
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      background-color: #f1f1f1;
+    }
+
+    .code-line {
+      display: flex;
+    }
+
+    .line-number {
+      background-color: #454545;
+      color: white;
+      padding: 0 10px;
+      white-space: pre;
+      user-select: none;
+    }
+
+    pre {
+      margin: 0;
+      padding: 0 10px;
+      white-space: pre-wrap;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #555;
+      border-top: 1px solid #ccc;
+      margin-top: 20px;
+      padding-top: 10px;
+    }
+
     @media print {
-      .hide-from-print {
-        display: none;
-      }
-
-      #print-area {
-        display: block;
-      }
-
-      body {
-        print-color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-      }
+      .hide-from-print { display: none; }
+      #print-area { display: block; }
     }
   </style>
 </head>
-
 <body>
   <div class="hide-from-print">
     <h1>Code-2-PDF</h1>
-
     <div class="options">
-      <input id="document-name-input" type="text" placeholder="File name (optional)" />
+      <input id="document-name-input" type="text" placeholder="File name" />
       <select id="languages">
         <option value="javascript">JavaScript</option>
-        <option value="python">Python</option>
-        <option value="java">Java</option>
-        <option value="c">C</option>
-        <option value="cpp">C++</option>
         <option value="html">HTML</option>
         <option value="css">CSS</option>
+        <option value="python">Python</option>
+        <option value="cpp">C++</option>
+        <option value="java">Java</option>
+        <option value="c">C</option>
+        option value="c">Python</option>
         <option value="php">PHP</option>
-        <option value="go">Go</option>
-        <option value="kotlin">Kotlin</option>
-        <option value="swift">Swift</option>
       </select>
       <select id="themes">
         <optgroup label="Dark">
-          <option value="github-dark">GitHub Dark</option>
-          <option value="monokai">Monokai</option>
           <option value="atom-one-dark">Atom One Dark</option>
+          <option value="github-dark" selected>GitHub Dark</option>
         </optgroup>
         <optgroup label="Light">
           <option value="github">GitHub Light</option>
-          <option value="xcode">Xcode</option>
           <option value="default">Default</option>
         </optgroup>
       </select>
-      <button id="download">Download PDF</button>
+      <button id="print">Download PDF</button>
     </div>
-
     <textarea spellcheck="false" placeholder="Enter your code here..."></textarea>
   </div>
 
   <div id="print-area">
     <div id="code-container"></div>
+    <div class="footer">
+      <div>Developed by Divyanshu Pandey</div>
+      <div id="datetime"></div>
+    </div>
   </div>
 
+  <!-- JavaScript -->
   <script>
-    const textarea = document.querySelector("textarea");
-    const downloadBtn = document.getElementById("download");
-    const codeContainer = document.getElementById("code-container");
-    const languageSelector = document.getElementById("languages");
-    const themeSelector = document.getElementById("themes");
-    const themeStylesheet = document.getElementById("theme-style");
-    const documentNameInput = document.getElementById("document-name-input");
+    const printBtn = document.getElementById('print');
+    const codeTextArea = document.querySelector('textarea');
+    const codeContainer = document.getElementById('code-container');
+    const documentNameInput = document.getElementById('document-name-input');
+    const languageSelector = document.getElementById('languages');
+    const themeSelector = document.getElementById('themes');
+    const themeStylesheet = document.getElementById('theme-style');
 
-    let selectedLanguage = localStorage.getItem("language") || "javascript";
-    let selectedTheme = localStorage.getItem("theme") || "github-dark";
-    let codeText = localStorage.getItem("code") || 'console.log("Hello, PDF!");';
+    let selectedLanguage = 'javascript';
+    let selectedTheme = 'github-dark';
 
-    languageSelector.value = selectedLanguage;
-    themeSelector.value = selectedTheme;
-    textarea.value = codeText;
-    themeStylesheet.href = getStylesheet(selectedTheme);
-
-    textarea.addEventListener("input", () => {
-      localStorage.setItem("code", textarea.value);
-      updateCode();
-    });
-
-    textarea.addEventListener("keydown", (e) => {
-      if (e.key === "Tab") {
-        e.preventDefault();
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        textarea.value = textarea.value.substring(0, start) + "\t" + textarea.value.substring(end);
-        textarea.selectionStart = textarea.selectionEnd = start + 1;
-        textarea.dispatchEvent(new Event("input"));
-      }
-    });
-
-    languageSelector.addEventListener("change", () => {
+    languageSelector.addEventListener('change', () => {
       selectedLanguage = languageSelector.value;
-      localStorage.setItem("language", selectedLanguage);
-      updateCode();
     });
 
-    themeSelector.addEventListener("change", () => {
+    themeSelector.addEventListener('change', () => {
       selectedTheme = themeSelector.value;
-      localStorage.setItem("theme", selectedTheme);
-      themeStylesheet.href = getStylesheet(selectedTheme);
+      themeStylesheet.href = `//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/${selectedTheme}.min.css`;
     });
-
-    downloadBtn.addEventListener("click", () => {
-      updateCode();
-      setTimeout(() => {
-        const opt = {
-          margin: 0.5,
-          filename: (documentNameInput.value || "code") + ".pdf",
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true },
-          jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
-        };
-
-        const printArea = document.getElementById("print-area");
-        printArea.style.display = "block";
-
-        html2pdf().set(opt).from(printArea).save().then(() => {
-          printArea.style.display = "none";
-        });
-      }, 300);
-    });
-
-    function getStylesheet(theme) {
-      return `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/${theme}.min.css`;
-    }
 
     function escapeHtml(text) {
       return text
@@ -233,24 +192,42 @@
         .replace(/'/g, "&#039;");
     }
 
+    function createCodeLine(lineNumber, lineContent) {
+      return `<div class="code-line">
+        <span class="line-number">${lineNumber}</span>
+        <pre><code class="hljs language-${selectedLanguage}">${lineContent}</code></pre>
+      </div>`;
+    }
+
     function updateCode() {
-      const lines = textarea.value.split("\n");
-      const width = Math.floor(Math.log10(lines.length)) + 1;
-      let html = "";
-      lines.forEach((line, idx) => {
-        const num = String(idx + 1).padStart(width, " ");
-        html += `
-          <div class="code-line">
-            <span class="line-number">${num}</span>
-            <pre class="code-pre"><code class="hljs language-${selectedLanguage}">${escapeHtml(line) || " "}</code></pre>
-          </div>`;
-      });
-      codeContainer.innerHTML = html;
+      const lines = codeTextArea.value.split('\n');
+      codeContainer.innerHTML = lines.map((line, i) =>
+        createCodeLine(i + 1, escapeHtml(line))
+      ).join('');
       hljs.highlightAll();
     }
 
-    updateCode();
+    printBtn.addEventListener('click', () => {
+      updateCode();
+
+      // Set datetime
+      const now = new Date();
+      document.getElementById('datetime').textContent = now.toLocaleString();
+
+      // Filename
+      const filename = (documentNameInput.value || 'Code') + '.pdf';
+
+      const element = document.getElementById('print-area');
+      const opt = {
+        margin:       0.5,
+        filename:     filename,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    });
   </script>
 </body>
-
 </html>
