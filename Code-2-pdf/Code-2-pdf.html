@@ -4,25 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Convert Code to PDF Online: Free Tool for Programming Languages</title>
-  <link rel="icon" type="image/x-icon" href="/images/printer.png" />
+  <title>Convert Code to PDF Online</title>
+
   <meta name="description"
-    content="Convert code to PDF online for free with our tool that supports multiple programming languages and syntax highlighting themes." />
+    content="Convert code to PDF online for free with syntax highlighting and themes." />
   <meta name="keywords"
-    content="code to pdf, convert code to pdf, code converter, programming language converter, syntax highlighting, online converter, Convert code to pdf By Divyanshu Pandey" />
+    content="code to pdf, convert code, code pdf generator, syntax highlighting" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto&display=swap" rel="stylesheet" />
-
-  <!-- Highlight.js -->
-  <link id="theme-style"
+  <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/github-dark.min.css"
-    rel="stylesheet" />
+    id="theme-style" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-
-  <!-- html2pdf -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
@@ -36,30 +29,26 @@
       padding: 20px;
       background-color: #222831;
       color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
     .options {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      padding: 0 20px;
+      gap: 12px;
+      padding: 20px;
     }
 
     .options>* {
       flex: 1;
-      min-width: 150px;
+      min-width: 140px;
     }
 
     input,
     select,
     button {
-      padding: 6px;
+      padding: 8px;
       border-radius: 5px;
       font-size: 1rem;
-      width: 100%;
     }
 
     button {
@@ -67,37 +56,22 @@
       color: white;
       border: none;
       font-weight: bold;
-      transition: background-color 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
     }
 
     button:hover {
       background-color: #40739e;
-      cursor: pointer;
-    }
-
-    button:active {
-      transform: scale(0.95);
     }
 
     textarea {
-      padding: 10px;
+      padding: 12px;
       margin: 20px;
       width: calc(100% - 40px);
       height: 300px;
-      border-radius: 5px;
-      resize: none;
       font-family: 'Fira Code', monospace;
       font-size: 14px;
-    }
-
-    .github-icon {
-      width: 40px;
-      height: 40px;
-    }
-
-    #print-area {
-      display: none;
-      padding: 20px;
+      border-radius: 5px;
+      resize: none;
     }
 
     .code-line {
@@ -107,7 +81,7 @@
     }
 
     .line-number {
-      padding: 0 11px;
+      padding: 0 12px;
       background-color: #454545;
       color: white;
       user-select: none;
@@ -117,8 +91,9 @@
       flex-grow: 1;
     }
 
-    #code-container {
-      max-width: 100%;
+    #print-area {
+      display: none;
+      padding: 20px;
     }
 
     @media print {
@@ -135,68 +110,40 @@
         -webkit-print-color-adjust: exact;
       }
     }
-
-    @media (max-width: 600px) {
-      .options {
-        flex-direction: column;
-      }
-
-      .github-icon {
-        margin-top: 10px;
-      }
-    }
   </style>
 </head>
 
 <body>
   <div class="hide-from-print">
-    <h1>
-      Code-2-PDF
-      <a href="https://github.com/CodeCr4cker/Code-2-pdf" target="_blank">
-        <img src="images/github-mark-white.png" alt="GitHub" class="github-icon" />
-      </a>
-    </h1>
+    <h1>Code-2-PDF</h1>
 
     <div class="options">
-      <input id="document-name-input" type="text" placeholder="File name" aria-label="File name" />
-      <select id="languages" aria-label="Language">
+      <input id="document-name-input" type="text" placeholder="File name (optional)" />
+      <select id="languages">
         <option value="javascript">JavaScript</option>
-        <option value="typescript">TypeScript</option>
-        <option value="json">JSON</option>
+        <option value="python">Python</option>
+        <option value="java">Java</option>
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
         <option value="html">HTML</option>
         <option value="css">CSS</option>
         <option value="php">PHP</option>
-        <option value="python">Python</option>
-        <option value="r">R</option>
-        <option value="c">C</option>
-        <option value="cpp">C++</option>
-        <option value="cs">C#</option>
-        <option value="rust">Rust</option>
         <option value="go">Go</option>
-        <option value="java">Java</option>
         <option value="kotlin">Kotlin</option>
         <option value="swift">Swift</option>
-        <option value="armasm">ARM Assembly</option>
-        <option value="x86asm">x86 Assembly</option>
       </select>
-      <select id="themes" aria-label="Theme">
+      <select id="themes">
         <optgroup label="Dark">
-          <option value="atom-one-dark">Atom One Dark</option>
-          <option value="vs2015">VS Code</option>
-          <option value="nord">Nord</option>
+          <option value="github-dark">GitHub Dark</option>
           <option value="monokai">Monokai</option>
-          <option value="github-dark" selected>GitHub Dark</option>
-          <option value="github-dark-dimmed">GitHub Dark Dimmed</option>
+          <option value="atom-one-dark">Atom One Dark</option>
         </optgroup>
         <optgroup label="Light">
-          <option value="atom-one-light">Atom One Light</option>
-          <option value="default">Default</option>
-          <option value="xcode">Xcode</option>
-          <option value="intellij-light">IntelliJ Light</option>
           <option value="github">GitHub Light</option>
+          <option value="xcode">Xcode</option>
+          <option value="default">Default</option>
         </optgroup>
       </select>
-      <button id="print">Print</button>
       <button id="download">Download PDF</button>
     </div>
 
@@ -209,7 +156,6 @@
 
   <script>
     const textarea = document.querySelector("textarea");
-    const printBtn = document.getElementById("print");
     const downloadBtn = document.getElementById("download");
     const codeContainer = document.getElementById("code-container");
     const languageSelector = document.getElementById("languages");
@@ -219,7 +165,7 @@
 
     let selectedLanguage = localStorage.getItem("language") || "javascript";
     let selectedTheme = localStorage.getItem("theme") || "github-dark";
-    let codeText = localStorage.getItem("code") || 'console.log("Hello World!");';
+    let codeText = localStorage.getItem("code") || 'console.log("Hello, PDF!");';
 
     languageSelector.value = selectedLanguage;
     themeSelector.value = selectedTheme;
@@ -254,13 +200,6 @@
       themeStylesheet.href = getStylesheet(selectedTheme);
     });
 
-    printBtn.addEventListener("click", () => {
-      updateCode();
-      document.title = documentNameInput.value || "Code";
-      window.print();
-      document.title = "Convert Code to PDF Online: Free Tool for Programming Languages";
-    });
-
     downloadBtn.addEventListener("click", () => {
       updateCode();
       setTimeout(() => {
@@ -269,9 +208,15 @@
           filename: (documentNameInput.value || "code") + ".pdf",
           image: { type: "jpeg", quality: 0.98 },
           html2canvas: { scale: 2, useCORS: true },
-          jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+          jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
         };
-        html2pdf().set(opt).from(document.getElementById("print-area")).save();
+
+        const printArea = document.getElementById("print-area");
+        printArea.style.display = "block";
+
+        html2pdf().set(opt).from(printArea).save().then(() => {
+          printArea.style.display = "none";
+        });
       }, 300);
     });
 
